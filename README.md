@@ -1,0 +1,158 @@
+# bitrix24-cli
+
+CLI tool to manage Bitrix24 from your terminal. Built with React Ink.
+
+Manage tasks, comments, time tracking, kanban stages, and more — all from the command line.
+
+## Install
+
+### npm (recommended)
+
+```bash
+npm install -g bitrix24-cli
+```
+
+### One-line installer (Linux / macOS / WSL)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash -s -- npm
+```
+
+Or interactive mode:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash
+```
+
+### Nix (flakes)
+
+```bash
+# Run directly
+nix run github:user/bitrix24-cli
+
+# Install to profile
+nix profile install github:user/bitrix24-cli
+
+# Dev shell
+nix develop github:user/bitrix24-cli
+```
+
+### Nix (classic)
+
+```bash
+# Build
+nix-build
+
+# Install
+nix-env -if .
+
+# Dev shell
+nix-shell
+```
+
+### From source
+
+```bash
+git clone https://github.com/user/bitrix24-cli.git
+cd bitrix24-cli
+npm install && npm run build && npm link
+```
+
+### Uninstall
+
+```bash
+# npm
+npm uninstall -g bitrix24-cli
+
+# Script
+curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash -s -- --uninstall
+
+# Nix
+nix profile remove bitrix24-cli
+```
+
+## Setup
+
+Get your webhook URL from Bitrix24:
+**CRM → Developer resources → Other → Inbound webhook**
+
+```bash
+b24 login https://your-domain.bitrix24.com/rest/USER_ID/WEBHOOK_KEY/
+```
+
+## Usage
+
+```bash
+# Interactive menu
+b24
+
+# Task list
+b24 tasks
+
+# Task details
+b24 tasks 123
+
+# Change language
+b24 lang uz    # O'zbek
+b24 lang ru    # Русский
+b24 lang en    # English
+
+# Connection status
+b24 status
+
+# Logout
+b24 logout
+```
+
+## Features
+
+- **Task management** — view, filter, update tasks
+- **Status changes** — start, complete, pause, defer, renew
+- **Comments** — add comments with @mentions (`[USER=ID]Name[/USER]`)
+- **Time tracking** — log hours and minutes with descriptions
+- **Delegate** — change task responsible person
+- **Kanban** — move tasks between stages
+- **Multi-language** — English, Uzbek, Russian (extensible)
+
+## Adding Custom Languages
+
+Create a JSON file in `~/.config/bitrix24-cli/locales/`:
+
+```bash
+# Copy the template
+cat ~/.config/bitrix24-cli/locales/template.json
+```
+
+Create your translation file (e.g., `de.json` for German):
+
+```json
+{
+  "_name": "Deutsch",
+  "app.name": "BITRIX24 CLI",
+  "menu.title": "Hauptmenü"
+}
+```
+
+Then use it:
+
+```bash
+b24 lang de
+```
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `↑↓` | Navigate menu |
+| `Enter` | Select / Confirm |
+| `Esc` | Go back |
+| `R` | Refresh list |
+| `Q` | Quit |
+
+## Platforms
+
+Works on **Windows**, **macOS**, and **Linux** — anywhere Node.js 18+ runs.
+
+## License
+
+MIT

@@ -12,8 +12,8 @@ import { t, setLocale, getLocale, getAvailableLocales, LANGUAGE_NAMES } from './
 const program = new Command();
 
 program
-  .name('bitrix24-cli')
-  .description('Bitrix24 CLI - manage Bitrix24 from terminal')
+  .name('b24-cli')
+  .description('B24 CLI - manage Bitrix24 from terminal')
   .version('1.0.0');
 
 program
@@ -80,7 +80,7 @@ program
         console.log(`  ${c} - ${LANGUAGE_NAMES[c] || c}${marker}`);
       });
       console.log('');
-      console.log(`Usage: bitrix24-cli lang <code>`);
+      console.log(`Usage: b24-cli lang <code>`);
     }
   });
 
@@ -111,7 +111,7 @@ if (process.argv.length <= 2) {
     console.log(t('welcome.title'));
     console.log('');
     console.log(t('welcome.setup'));
-    console.log('  bitrix24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK_KEY/');
+    console.log('  b24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK_KEY/');
     console.log('');
     console.log(t('welcome.commands'));
     console.log(`  login <url>    - ${t('welcome.login_desc')}`);

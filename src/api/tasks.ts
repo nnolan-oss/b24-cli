@@ -46,20 +46,6 @@ export interface Stage {
   ENTITY_ID: string;
 }
 
-export const STATUS_MAP: Record<string, string> = {
-  '2': 'Kutilmoqda',
-  '3': 'Bajarilmoqda',
-  '4': 'Kutish (nazorat)',
-  '5': 'Tugallangan',
-  '6': 'Kechiktirilgan',
-  '1': 'Yangi',
-};
-
-export const PRIORITY_MAP: Record<string, string> = {
-  '0': 'Past',
-  '1': 'O\'rtacha',
-  '2': 'Yuqori',
-};
 
 export async function getMyTasks(params: Record<string, any> = {}): Promise<{ tasks: Task[]; total: number }> {
   const result = await callMethod('tasks.task.list', {

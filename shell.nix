@@ -1,4 +1,4 @@
-# Development shell for bitrix24-cli
+# Development shell for b24-cli
 # Usage: nix-shell
 { pkgs ? import <nixpkgs> {} }:
 
@@ -11,7 +11,7 @@ pkgs.mkShell {
 
   shellHook = ''
     echo ""
-    echo "  bitrix24-cli dev shell"
+    echo "  b24-cli dev shell"
     echo "  ─────────────────────────"
     echo "  npm install     — install dependencies"
     echo "  npm run build   — build TypeScript"

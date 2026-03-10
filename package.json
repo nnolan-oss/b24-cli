@@ -1,11 +1,11 @@
 {
-  "name": "bitrix24-cli",
+  "name": "b24-cli",
   "version": "1.0.0",
   "description": "CLI tool to manage Bitrix24 tasks, comments, time tracking from terminal. Supports multiple languages.",
   "type": "module",
   "main": "dist/cli.js",
   "bin": {
-    "bitrix24-cli": "dist/cli.js",
+    "b24-cli": "dist/cli.js",
     "b24": "dist/cli.js"
   },
   "scripts": {
@@ -26,13 +26,16 @@
     "ink",
     "react-ink"
   ],
-  "author": "",
+  "author": "Javohir G'ulomjonov <https://nolan.uz> (https://github.com/3nln)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/nnolan-oss/b24-cli.git"
   },
-  "homepage": "",
+  "homepage": "https://github.com/nnolan-oss/b24-cli#readme",
+  "bugs": {
+    "url": "https://github.com/nnolan-oss/b24-cli/issues"
+  },
   "engines": {
     "node": ">=18"
   },

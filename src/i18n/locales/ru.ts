@@ -1,7 +1,7 @@
 export default {
   // General
-  'app.name': 'BITRIX24 CLI',
-  'app.welcome': 'Добро пожаловать в Bitrix24 CLI!',
+  'app.name': 'B24 CLI',
+  'app.welcome': 'Добро пожаловать в B24 CLI!',
   'app.version': 'Версия',
   'app.back': 'Назад',
   'app.cancel': 'Отмена',
@@ -18,8 +18,8 @@ export default {
   'app.not_found': 'Не найдено',
 
   // Auth
-  'auth.not_configured': 'Webhook URL не настроен. Сначала выполните "bitrix24-cli login <webhook-url>".',
-  'auth.help': 'Помощь: bitrix24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
+  'auth.not_configured': 'Webhook URL не настроен. Сначала выполните "b24-cli login <webhook-url>".',
+  'auth.help': 'Помощь: b24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
   'auth.connecting': 'Подключение к Bitrix24...',
   'auth.connection_error': 'Ошибка подключения',
   'auth.success': 'Успешно! Привет,',
@@ -30,7 +30,7 @@ export default {
   'auth.status_disconnected': 'Статус: Не подключён',
 
   // Welcome (no auth)
-  'welcome.title': 'Добро пожаловать в Bitrix24 CLI!',
+  'welcome.title': 'Добро пожаловать в B24 CLI!',
   'welcome.setup': 'Сначала авторизуйтесь с помощью webhook URL:',
   'welcome.commands': 'Команды:',
   'welcome.login_desc': 'Подключиться через webhook',
@@ -151,5 +151,5 @@ export default {
   'lang.title': 'Сменить язык',
   'lang.select': 'Выберите язык:',
   'lang.changed': 'Язык изменён на',
-  'lang.custom_hint': 'Добавьте свой язык: ~/.config/bitrix24-cli/locales/',
+  'lang.custom_hint': 'Добавьте свой язык: ~/.config/b24-cli/locales/',
 } as const;

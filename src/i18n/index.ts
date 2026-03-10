@@ -9,7 +9,7 @@ import config from '../utils/config.js';
 export type TranslationKey = keyof typeof en;
 export type Translations = Record<TranslationKey, string>;
 
-const CUSTOM_LOCALES_DIR = join(homedir(), '.config', 'bitrix24-cli', 'locales');
+const CUSTOM_LOCALES_DIR = join(homedir(), '.config', 'b24-cli', 'locales');
 
 const builtInLocales: Record<string, Translations> = { en, uz, ru };
 const customLocales: Record<string, Translations> = {};

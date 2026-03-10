@@ -1,7 +1,7 @@
 export default {
   // General
-  'app.name': 'BITRIX24 CLI',
-  'app.welcome': 'Bitrix24 CLI ga xush kelibsiz!',
+  'app.name': 'B24 CLI',
+  'app.welcome': 'B24 CLI ga xush kelibsiz!',
   'app.version': 'Versiya',
   'app.back': 'Orqaga',
   'app.cancel': 'Bekor qilish',
@@ -18,8 +18,8 @@ export default {
   'app.not_found': 'Topilmadi',
 
   // Auth
-  'auth.not_configured': 'Webhook URL sozlanmagan. Avval "bitrix24-cli login <webhook-url>" buyrug\'ini bajaring.',
-  'auth.help': 'Yordam: bitrix24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
+  'auth.not_configured': 'Webhook URL sozlanmagan. Avval "b24-cli login <webhook-url>" buyrug\'ini bajaring.',
+  'auth.help': 'Yordam: b24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
   'auth.connecting': 'Bitrix24 ga ulanilmoqda...',
   'auth.connection_error': 'Ulanish xatosi',
   'auth.success': 'Muvaffaqiyatli! Salom,',
@@ -30,7 +30,7 @@ export default {
   'auth.status_disconnected': 'Holat: Ulanmagan',
 
   // Welcome (no auth)
-  'welcome.title': 'Bitrix24 CLI ga xush kelibsiz!',
+  'welcome.title': 'B24 CLI ga xush kelibsiz!',
   'welcome.setup': 'Avval webhook URL bilan autentifikatsiya qiling:',
   'welcome.commands': 'Buyruqlar:',
   'welcome.login_desc': 'Webhook bilan ulanish',
@@ -151,5 +151,5 @@ export default {
   'lang.title': 'Tilni o\'zgartirish',
   'lang.select': 'Tilni tanlang:',
   'lang.changed': 'Til o\'zgartirildi:',
-  'lang.custom_hint': 'O\'z tilingizni qo\'shing: ~/.config/bitrix24-cli/locales/',
+  'lang.custom_hint': 'O\'z tilingizni qo\'shing: ~/.config/b24-cli/locales/',
 } as const;

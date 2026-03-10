@@ -29,7 +29,7 @@ export function useAsync<T>(fn: () => Promise<T>, deps: any[] = []): AsyncState<
       })
       .catch(err => {
         if (!cancelled) {
-          setError(err.message || 'Noma\'lum xatolik');
+          setError(err.message || 'Unknown error');
           setLoading(false);
         }
       });

@@ -1,63 +1,63 @@
-# Bitrix24 CLI Tool
+# B24 CLI Tool
 
-## Loyiha haqida
+## About
 
-Bitrix24 platformasini terminal orqali boshqarish uchun mo'ljallangan CLI vosita. React Ink framework asosida qurilgan, interaktiv va foydalanuvchiga qulay interfeys bilan.
+A CLI tool for managing Bitrix24 from the terminal. Built with React Ink framework, providing an interactive and user-friendly interface.
 
-## Asosiy xususiyatlar
+## Key Features
 
-### Autentifikatsiya
-- Inbound webhook URL orqali autentifikatsiya
-- Konfiguratsiya faylida webhook saqlash (`~/.bitrix-cli/config.json`)
-- `bitrix-cli login <webhook-url>` buyrug'i orqali sozlash
+### Authentication
+- Authentication via inbound webhook URL
+- Webhook stored in config file (`~/.config/b24-cli/config.json`)
+- Setup via `b24 login <webhook-url>` command
 
-### Task (Vazifalar) boshqaruvi
-- **Mening vazifalarim** — o'ziga tegishli barcha vazifalarni ko'rish
-- **Vazifa tafsilotlari** — tanlangan vazifa haqida to'liq ma'lumot
-- **Status o'zgartirish** — vazifani bir holatdan boshqasiga o'tkazish (yangi, bajarilmoqda, tugallangan va h.k.)
-- **Kanban bo'ylab surish** — vazifani kanban bosqichlari orasida ko'chirish
-- **Mas'ul shaxsni o'zgartirish** — vazifaga tayinlangan odamni almashtirish
-- **Yangi vazifa yaratish** — terminal orqali yangi vazifa qo'shish
+### Task Management
+- **My tasks** — view all tasks assigned to you
+- **Task details** — full information about a selected task
+- **Change status** — move task between states (new, in progress, completed, etc.)
+- **Kanban movement** — move tasks between kanban stages
+- **Change responsible** — reassign a task to a different person
+- **Create task** — create a new task from terminal
 
-### Izohlar (Comments)
-- Vazifaga izoh yozish
-- **@mention** — foydalanuvchini eslatib o'tib izoh yozish
-- Izohlar tarixini ko'rish
+### Comments
+- Add comments to tasks
+- **@mention** — mention users in comments (`[USER=ID]Name[/USER]`)
+- View comment history
 
-### Vaqt hisobi (Time Tracking)
-- Vazifaga sarflangan vaqtni qo'shish
-- Vaqt hisobini ko'rish
-- Taymer boshlash/to'xtatish
+### Time Tracking
+- Add time spent on a task
+- View time logs
+- Start/stop timer
 
-### Qo'shimcha imkoniyatlar
-- Foydalanuvchilar ro'yxatini ko'rish
-- Loyihalar ro'yxati
-- Vazifalarni filtrlash va qidirish
-- Rang kodlari bilan ustuvorlik ko'rsatish
+### Additional Features
+- View users list
+- Projects list
+- Filter and search tasks
+- Priority color coding
 
-## Texnologiyalar
+## Technologies
 
 - **React Ink** — terminal UI framework
-- **TypeScript** — tip xavfsizligi
-- **Commander.js** — CLI buyruqlarni boshqarish
-- **Axios** — HTTP so'rovlar
+- **TypeScript** — type safety
+- **Commander.js** — CLI command handling
+- **Axios** — HTTP requests
 
-## O'rnatish
+## Installation
 
 ```bash
-npm install -g bitrix24-cli
-bitrix24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK_KEY/
-bitrix24-cli tasks
+npm install -g b24-cli
+b24 login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK_KEY/
+b24 tasks
 ```
 
-## Buyruqlar
+## Commands
 
-| Buyruq | Tavsif |
-|--------|--------|
-| `login <url>` | Webhook URL bilan autentifikatsiya |
-| `tasks` | Interaktiv vazifalar paneli |
-| `tasks list` | Vazifalar ro'yxati |
-| `tasks view <id>` | Vazifa tafsilotlari |
-| `tasks comment <id>` | Vazifaga izoh qo'shish |
-| `tasks time <id>` | Vaqt hisobi qo'shish |
-| `tasks move <id>` | Vazifani boshqa bosqichga ko'chirish |
+| Command | Description |
+|---------|-------------|
+| `login <url>` | Authenticate with webhook URL |
+| `tasks` | Interactive tasks panel |
+| `tasks <id>` | Task details |
+| `open` | Interactive main menu |
+| `lang <code>` | Change language (en, uz, ru) |
+| `status` | Connection status |
+| `logout` | Clear configuration |

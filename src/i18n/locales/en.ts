@@ -1,7 +1,7 @@
 export default {
   // General
-  'app.name': 'BITRIX24 CLI',
-  'app.welcome': 'Welcome to Bitrix24 CLI!',
+  'app.name': 'B24 CLI',
+  'app.welcome': 'Welcome to B24 CLI!',
   'app.version': 'Version',
   'app.back': 'Back',
   'app.cancel': 'Cancel',
@@ -18,8 +18,8 @@ export default {
   'app.not_found': 'Not found',
 
   // Auth
-  'auth.not_configured': 'Webhook URL not configured. Run "bitrix24-cli login <webhook-url>" first.',
-  'auth.help': 'Help: bitrix24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
+  'auth.not_configured': 'Webhook URL not configured. Run "b24-cli login <webhook-url>" first.',
+  'auth.help': 'Help: b24-cli login https://your-domain.bitrix24.kz/rest/USER_ID/WEBHOOK/',
   'auth.connecting': 'Connecting to Bitrix24...',
   'auth.connection_error': 'Connection error',
   'auth.success': 'Success! Hello,',
@@ -30,7 +30,7 @@ export default {
   'auth.status_disconnected': 'Status: Disconnected',
 
   // Welcome (no auth)
-  'welcome.title': 'Welcome to Bitrix24 CLI!',
+  'welcome.title': 'Welcome to B24 CLI!',
   'welcome.setup': 'First, authenticate with a webhook URL:',
   'welcome.commands': 'Commands:',
   'welcome.login_desc': 'Connect with webhook',
@@ -151,5 +151,5 @@ export default {
   'lang.title': 'Change language',
   'lang.select': 'Select language:',
   'lang.changed': 'Language changed to',
-  'lang.custom_hint': 'Add custom languages in ~/.config/bitrix24-cli/locales/',
+  'lang.custom_hint': 'Add custom languages in ~/.config/b24-cli/locales/',
 } as const;

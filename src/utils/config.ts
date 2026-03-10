@@ -7,7 +7,7 @@ interface ConfigSchema {
 }
 
 const config = new Conf<ConfigSchema>({
-  projectName: 'bitrix24-cli',
+  projectName: 'b24-cli',
   schema: {
     webhookUrl: {
       type: 'string',

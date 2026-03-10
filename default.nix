@@ -6,8 +6,8 @@
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  bitrix24-cli = pkgs.stdenv.mkDerivation rec {
-    pname = "bitrix24-cli";
+  b24-cli = pkgs.stdenv.mkDerivation rec {
+    pname = "b24-cli";
     version = "1.0.0";
 
     src = ./.;
@@ -22,16 +22,16 @@ let
     '';
 
     installPhase = ''
-      mkdir -p $out/lib/node_modules/bitrix24-cli
-      cp -r dist package.json node_modules $out/lib/node_modules/bitrix24-cli/
+      mkdir -p $out/lib/node_modules/b24-cli
+      cp -r dist package.json node_modules $out/lib/node_modules/b24-cli/
 
       mkdir -p $out/bin
 
-      makeWrapper ${pkgs.nodejs_22}/bin/node $out/bin/bitrix24-cli \
-        --add-flags "$out/lib/node_modules/bitrix24-cli/dist/cli.js"
+      makeWrapper ${pkgs.nodejs_22}/bin/node $out/bin/b24-cli \
+        --add-flags "$out/lib/node_modules/b24-cli/dist/cli.js"
 
       makeWrapper ${pkgs.nodejs_22}/bin/node $out/bin/b24 \
-        --add-flags "$out/lib/node_modules/bitrix24-cli/dist/cli.js"
+        --add-flags "$out/lib/node_modules/b24-cli/dist/cli.js"
     '';
 
     meta = with pkgs.lib; {
@@ -42,4 +42,4 @@ let
     };
   };
 in
-bitrix24-cli
+b24-cli

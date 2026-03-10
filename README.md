@@ -1,4 +1,4 @@
-# bitrix24-cli
+# B24 CLI
 
 CLI tool to manage Bitrix24 from your terminal. Built with React Ink.
 
@@ -9,32 +9,32 @@ Manage tasks, comments, time tracking, kanban stages, and more — all from the 
 ### npm (recommended)
 
 ```bash
-npm install -g bitrix24-cli
+npm install -g b24-cli
 ```
 
 ### One-line installer (Linux / macOS / WSL)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash -s -- npm
+curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash -s -- npm
 ```
 
 Or interactive mode:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash
 ```
 
 ### Nix (flakes)
 
 ```bash
 # Run directly
-nix run github:user/bitrix24-cli
+nix run github:nnolan-oss/b24-cli
 
 # Install to profile
-nix profile install github:user/bitrix24-cli
+nix profile install github:nnolan-oss/b24-cli
 
 # Dev shell
-nix develop github:user/bitrix24-cli
+nix develop github:nnolan-oss/b24-cli
 ```
 
 ### Nix (classic)
@@ -53,8 +53,8 @@ nix-shell
 ### From source
 
 ```bash
-git clone https://github.com/user/bitrix24-cli.git
-cd bitrix24-cli
+git clone https://github.com/nnolan-oss/b24-cli.git
+cd b24-cli
 npm install && npm run build && npm link
 ```
 
@@ -62,13 +62,13 @@ npm install && npm run build && npm link
 
 ```bash
 # npm
-npm uninstall -g bitrix24-cli
+npm uninstall -g b24-cli
 
 # Script
-curl -fsSL https://raw.githubusercontent.com/user/bitrix24-cli/main/install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash -s -- --uninstall
 
 # Nix
-nix profile remove bitrix24-cli
+nix profile remove b24-cli
 ```
 
 ## Setup
@@ -116,11 +116,11 @@ b24 logout
 
 ## Adding Custom Languages
 
-Create a JSON file in `~/.config/bitrix24-cli/locales/`:
+Create a JSON file in `~/.config/b24-cli/locales/`:
 
 ```bash
 # Copy the template
-cat ~/.config/bitrix24-cli/locales/template.json
+cat ~/.config/b24-cli/locales/template.json
 ```
 
 Create your translation file (e.g., `de.json` for German):
@@ -152,6 +152,14 @@ b24 lang de
 ## Platforms
 
 Works on **Windows**, **macOS**, and **Linux** — anywhere Node.js 18+ runs.
+
+## Maintainer
+
+**Javohir G'ulomjonov**
+
+- GitHub: [@3nln](https://github.com/3nln)
+- LinkedIn: [javohirtech](https://linkedin.com/in/javohirtech)
+- Website: [nolan.uz](https://nolan.uz)
 
 ## License
 

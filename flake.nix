@@ -21,7 +21,7 @@
 
           src = ./.;
 
-          npmDepsHash = ""; # TODO: run `prefetch-npm-deps package-lock.json` and paste hash
+          npmDepsHash = "sha256-hlVP+rmWQ+EH65pJpoIDP5hOXisbY+QexXL+C0LPbl0=";
 
           nodejs = pkgs.nodejs_22;
 

@@ -37,19 +37,6 @@ nix profile install github:nnolan-oss/b24-cli
 nix develop github:nnolan-oss/b24-cli
 ```
 
-### Nix (classic)
-
-```bash
-# Build
-nix-build
-
-# Install
-nix-env -if .
-
-# Dev shell
-nix-shell
-```
-
 ### From source
 
 ```bash

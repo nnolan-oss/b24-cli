@@ -100,8 +100,10 @@ export async function renewTask(taskId: string): Promise<void> {
 // Comments
 export async function getComments(taskId: string): Promise<TaskComment[]> {
   const result = await callMethod("task.commentitem.getlist", {
-    TASKID: taskId,
+    TASKID: parseInt(taskId),
+    ORDER: { POST_DATE: "asc" },
   });
+
   return Array.isArray(result) ? result : [];
 }
 
@@ -110,7 +112,7 @@ export async function addComment(
   message: string,
 ): Promise<any> {
   return await callMethod("task.commentitem.add", {
-    TASKID: taskId,
+    TASKID: parseInt(taskId),
     FIELDS: { POST_MESSAGE: message },
   });
 }

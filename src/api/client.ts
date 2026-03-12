@@ -25,12 +25,13 @@ export function resetClient(): void {
 
 export async function callMethod<T = any>(
   method: string,
-  params: Record<string, any> = {},
+  params: any = {},
 ): Promise<T> {
   const api = getClient();
   const { data } = await api.post(`${method}.json`, params);
   if (data.error) {
     throw new Error(`Bitrix24: ${data.error_description || data.error}`);
   }
-  return data.result;
+
+  return data.hasOwnProperty("result") ? data.result : data;
 }

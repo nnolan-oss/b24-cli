@@ -15,13 +15,13 @@ npm install -g b24-cli
 ### One-line installer (Linux / macOS / WSL)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash -s -- npm
+curl -fsSL https://raw.githubusercontent.com/nnolan-oss/b24-cli/main/install.sh | bash -s -- npm
 ```
 
 Or interactive mode:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/nnolan-oss/b24-cli/main/install.sh | bash
 ```
 
 ### Nix (flakes)
@@ -65,7 +65,7 @@ npm install && npm run build && npm link
 npm uninstall -g b24-cli
 
 # Script
-curl -fsSL https://raw.githubusercontent.com/user/b24-cli/main/install.sh | bash -s -- --uninstall
+curl -fsSL https://raw.githubusercontent.com/nnolan-oss/b24-cli/main/install.sh | bash -s -- --uninstall
 
 # Nix
 nix profile remove b24-cli
@@ -141,13 +141,13 @@ b24 lang de
 
 ## Keyboard Shortcuts
 
-| Key | Action |
-|-----|--------|
-| `↑↓` | Navigate menu |
+| Key     | Action           |
+| ------- | ---------------- |
+| `↑↓`    | Navigate menu    |
 | `Enter` | Select / Confirm |
-| `Esc` | Go back |
-| `R` | Refresh list |
-| `Q` | Quit |
+| `Esc`   | Go back          |
+| `R`     | Refresh list     |
+| `Q`     | Quit             |
 
 ## Platforms
 

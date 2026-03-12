@@ -1,7 +1,6 @@
 # Development shell for b24-cli
 # Usage: nix-shell
-{ pkgs ? import <nixpkgs> {} }:
-
+{pkgs ? import <nixpkgs> {}}:
 pkgs.mkShell {
   buildInputs = with pkgs; [
     nodejs_22

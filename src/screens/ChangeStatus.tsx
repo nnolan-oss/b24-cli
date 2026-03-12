@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { Box, Text, useInput } from 'ink';
-import SelectInput from 'ink-select-input';
-import { Header } from '../components/Header.js';
-import { Loading } from '../components/Loading.js';
-import { ErrorMessage } from '../components/ErrorMessage.js';
-import { startTask, completeTask, pauseTask, deferTask, renewTask, type Task } from '../api/tasks.js';
-import { t } from '../i18n/index.js';
+import { Box, Text, useInput } from "ink";
+import SelectInput from "ink-select-input";
+import { useState } from "react";
+import {
+  completeTask,
+  deferTask,
+  pauseTask,
+  renewTask,
+  startTask,
+  type Task,
+} from "../api/tasks.js";
+import { ErrorMessage } from "../components/ErrorMessage.js";
+import { Header } from "../components/Header.js";
+import { Loading } from "../components/Loading.js";
+import { t } from "../i18n/index.js";
 
 interface ChangeStatusProps {
   task: Task;
@@ -24,25 +31,38 @@ export function ChangeStatus({ task, onDone, onBack }: ChangeStatusProps) {
   });
 
   const statusActions = [
-    { label: t('status.start'), value: 'start' },
-    { label: t('status.complete'), value: 'complete' },
-    { label: t('status.pause'), value: 'pause' },
-    { label: t('status.defer'), value: 'defer' },
-    { label: t('status.renew'), value: 'renew' },
-    { label: t('app.cancel'), value: 'cancel' },
+    { label: t("status.start"), value: "start" },
+    { label: t("status.complete"), value: "complete" },
+    { label: t("status.pause"), value: "pause" },
+    { label: t("status.defer"), value: "defer" },
+    { label: t("status.renew"), value: "renew" },
+    { label: t("app.cancel"), value: "cancel" },
   ];
 
   const handleSelect = async (item: { value: string }) => {
-    if (item.value === 'cancel') { onBack(); return; }
+    if (item.value === "cancel") {
+      onBack();
+      return;
+    }
     setProcessing(true);
     setError(null);
     try {
       switch (item.value) {
-        case 'start': await startTask(task.id); break;
-        case 'complete': await completeTask(task.id); break;
-        case 'pause': await pauseTask(task.id); break;
-        case 'defer': await deferTask(task.id); break;
-        case 'renew': await renewTask(task.id); break;
+        case "start":
+          await startTask(task.id);
+          break;
+        case "complete":
+          await completeTask(task.id);
+          break;
+        case "pause":
+          await pauseTask(task.id);
+          break;
+        case "defer":
+          await deferTask(task.id);
+          break;
+        case "renew":
+          await renewTask(task.id);
+          break;
       }
       setSuccess(true);
     } catch (err: any) {
@@ -52,21 +72,28 @@ export function ChangeStatus({ task, onDone, onBack }: ChangeStatusProps) {
     }
   };
 
-  if (processing) return <Loading message={t('status.changing')} />;
+  if (processing) return <Loading message={t("status.changing")} />;
 
   if (success) {
     return (
       <Box flexDirection="column">
-        <Text color="green" bold>{t('status.changed')}</Text>
-        <Text dimColor>{t('app.press_enter')}</Text>
+        <Text color="green" bold>
+          {t("status.changed")}
+        </Text>
+        <Text dimColor>{t("app.press_enter")}</Text>
       </Box>
     );
   }
 
   return (
     <Box flexDirection="column">
-      <Header title={`${t('status.change_title')} - #${task.id}`} subtitle={t('app.press_esc')} />
-      <Text dimColor>{t('status.current')}: {task.status}</Text>
+      <Header
+        title={`${t("status.change_title")} - #${task.id}`}
+        subtitle={t("app.press_esc")}
+      />
+      <Text dimColor>
+        {t("status.current")}: {task.status}
+      </Text>
       {error && <ErrorMessage message={error} />}
       <SelectInput items={statusActions} onSelect={handleSelect} />
     </Box>

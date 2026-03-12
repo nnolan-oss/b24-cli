@@ -1,4 +1,4 @@
-import { callMethod } from './client.js';
+import { callMethod } from "./client.js";
 
 export interface User {
   ID: string;
@@ -9,17 +9,19 @@ export interface User {
 }
 
 export async function getCurrentUser(): Promise<User> {
-  return await callMethod('user.current');
+  return await callMethod("user.current");
 }
 
-export async function getUsers(filter: Record<string, any> = {}): Promise<User[]> {
-  return await callMethod('user.get', { filter, start: 0 });
+export async function getUsers(
+  filter: Record<string, any> = {},
+): Promise<User[]> {
+  return await callMethod("user.get", { filter, start: 0 });
 }
 
 export async function getUser(userId: string): Promise<User[]> {
-  return await callMethod('user.get', { ID: userId });
+  return await callMethod("user.get", { ID: userId });
 }
 
 export function formatUserName(user: User): string {
-  return `${user.NAME || ''} ${user.LAST_NAME || ''}`.trim();
+  return `${user.NAME || ""} ${user.LAST_NAME || ""}`.trim();
 }

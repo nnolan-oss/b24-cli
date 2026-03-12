@@ -6,9 +6,13 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (
+      system: let
         pkgs = nixpkgs.legacyPackages.${system};
 
         b24-cli = pkgs.buildNpmPackage rec {
@@ -17,7 +21,7 @@
 
           src = ./.;
 
-          npmDepsHash = "";  # TODO: run `prefetch-npm-deps package-lock.json` and paste hash
+          npmDepsHash = ""; # TODO: run `prefetch-npm-deps package-lock.json` and paste hash
 
           nodejs = pkgs.nodejs_22;
 
@@ -45,8 +49,7 @@
             mainProgram = "b24";
           };
         };
-      in
-      {
+      in {
         packages = {
           default = b24-cli;
           b24-cli = b24-cli;

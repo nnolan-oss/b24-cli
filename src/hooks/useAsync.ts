@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 interface AsyncState<T> {
   data: T | null;
@@ -7,13 +7,16 @@ interface AsyncState<T> {
   refetch: () => void;
 }
 
-export function useAsync<T>(fn: () => Promise<T>, deps: any[] = []): AsyncState<T> {
+export function useAsync<T>(
+  fn: () => Promise<T>,
+  deps: any[] = [],
+): AsyncState<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [trigger, setTrigger] = useState(0);
 
-  const refetch = useCallback(() => setTrigger(t => t + 1), []);
+  const refetch = useCallback(() => setTrigger((t) => t + 1), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -21,20 +24,22 @@ export function useAsync<T>(fn: () => Promise<T>, deps: any[] = []): AsyncState<
     setError(null);
 
     fn()
-      .then(result => {
+      .then((result) => {
         if (!cancelled) {
           setData(result);
           setLoading(false);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         if (!cancelled) {
-          setError(err.message || 'Unknown error');
+          setError(err.message || "Unknown error");
           setLoading(false);
         }
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [...deps, trigger]);
 
   return { data, loading, error, refetch };

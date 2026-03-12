@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { Box, Text, useInput } from 'ink';
-import SelectInput from 'ink-select-input';
-import { Header } from '../components/Header.js';
-import { t, getAvailableLocales, setLocale, getLocale, LANGUAGE_NAMES, createTemplateLocale } from '../i18n/index.js';
+import { Box, Text, useInput } from "ink";
+import SelectInput from "ink-select-input";
+import { useState } from "react";
+import { Header } from "../components/Header.js";
+import {
+  createTemplateLocale,
+  getAvailableLocales,
+  getLocale,
+  LANGUAGE_NAMES,
+  setLocale,
+  t,
+} from "../i18n/index.js";
 
 interface ChangeLanguageProps {
   onDone: () => void;
@@ -11,7 +18,7 @@ interface ChangeLanguageProps {
 
 export function ChangeLanguage({ onDone, onBack }: ChangeLanguageProps) {
   const [changed, setChanged] = useState(false);
-  const [selectedLang, setSelectedLang] = useState('');
+  const [selectedLang, setSelectedLang] = useState("");
   const currentLocale = getLocale();
 
   useInput((_input: string, key: any) => {
@@ -20,8 +27,8 @@ export function ChangeLanguage({ onDone, onBack }: ChangeLanguageProps) {
   });
 
   const locales = getAvailableLocales();
-  const items = locales.map(code => ({
-    label: `${LANGUAGE_NAMES[code] || code}${code === currentLocale ? ' *' : ''}`,
+  const items = locales.map((code) => ({
+    label: `${LANGUAGE_NAMES[code] || code}${code === currentLocale ? " *" : ""}`,
     value: code,
   }));
 
@@ -34,9 +41,11 @@ export function ChangeLanguage({ onDone, onBack }: ChangeLanguageProps) {
   if (changed) {
     return (
       <Box flexDirection="column">
-        <Text color="green" bold>{t('lang.changed')} {selectedLang}</Text>
-        <Text dimColor>{t('lang.custom_hint')}</Text>
-        <Text dimColor>{t('app.press_enter')}</Text>
+        <Text color="green" bold>
+          {t("lang.changed")} {selectedLang}
+        </Text>
+        <Text dimColor>{t("lang.custom_hint")}</Text>
+        <Text dimColor>{t("app.press_enter")}</Text>
       </Box>
     );
   }
@@ -45,11 +54,13 @@ export function ChangeLanguage({ onDone, onBack }: ChangeLanguageProps) {
 
   return (
     <Box flexDirection="column">
-      <Header title={t('lang.title')} subtitle={t('app.press_esc')} />
-      <Text bold color="cyan">{t('lang.select')}</Text>
+      <Header title={t("lang.title")} subtitle={t("app.press_esc")} />
+      <Text bold color="cyan">
+        {t("lang.select")}
+      </Text>
       <SelectInput items={items} onSelect={handleSelect} />
       <Box marginTop={1}>
-        <Text dimColor>{t('lang.custom_hint')}</Text>
+        <Text dimColor>{t("lang.custom_hint")}</Text>
       </Box>
       <Text dimColor>Template: {templatePath}</Text>
     </Box>

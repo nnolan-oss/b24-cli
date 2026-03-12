@@ -1,6 +1,5 @@
-import React from 'react';
 import { Text } from 'ink';
-import { getStatusLabel, getPriorityLabel } from '../i18n/index.js';
+import { getPriorityLabel, getStatusLabel } from '../i18n/index.js';
 
 const STATUS_COLORS: Record<string, string> = {
   '1': 'gray',

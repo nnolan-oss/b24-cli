@@ -3,17 +3,15 @@
 #   nix-build
 #   nix-env -if .
 #   nix-shell
-{ pkgs ? import <nixpkgs> {} }:
-
-let
+{pkgs ? import <nixpkgs> {}}: let
   b24-cli = pkgs.stdenv.mkDerivation rec {
     pname = "b24-cli";
     version = "1.0.0";
 
     src = ./.;
 
-    buildInputs = [ pkgs.nodejs_22 ];
-    nativeBuildInputs = [ pkgs.nodejs_22 pkgs.makeWrapper ];
+    buildInputs = [pkgs.nodejs_22];
+    nativeBuildInputs = [pkgs.nodejs_22 pkgs.makeWrapper];
 
     buildPhase = ''
       export HOME=$(mktemp -d)
@@ -42,4 +40,4 @@ let
     };
   };
 in
-b24-cli
+  b24-cli

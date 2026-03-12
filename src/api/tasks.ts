@@ -1,4 +1,4 @@
-import { callMethod } from './client.js';
+import { callMethod } from "./client.js";
 
 export interface Task {
   id: string;
@@ -46,58 +46,70 @@ export interface Stage {
   ENTITY_ID: string;
 }
 
-
-export async function getMyTasks(params: Record<string, any> = {}): Promise<{ tasks: Task[]; total: number }> {
-  const result = await callMethod('tasks.task.list', {
-    order: { ID: 'desc' },
+export async function getMyTasks(
+  params: Record<string, any> = {},
+): Promise<{ tasks: Task[]; total: number }> {
+  const result = await callMethod("tasks.task.list", {
+    order: { ID: "desc" },
     filter: { RESPONSIBLE_ID: params.userId || 0, ...params.filter },
-    select: ['*', 'UF_*'],
+    select: ["*", "UF_*"],
     start: params.start || 0,
   });
   return { tasks: result.tasks || [], total: result.total || 0 };
 }
 
 export async function getTask(taskId: string): Promise<Task> {
-  const result = await callMethod('tasks.task.get', { taskId, select: ['*', 'UF_*'] });
+  const result = await callMethod("tasks.task.get", {
+    taskId,
+    select: ["*", "UF_*"],
+  });
   return result.task;
 }
 
-export async function updateTask(taskId: string, fields: Record<string, any>): Promise<void> {
-  await callMethod('tasks.task.update', { taskId, fields });
+export async function updateTask(
+  taskId: string,
+  fields: Record<string, any>,
+): Promise<void> {
+  await callMethod("tasks.task.update", { taskId, fields });
 }
 
 export async function createTask(fields: Record<string, any>): Promise<any> {
-  return await callMethod('tasks.task.add', { fields });
+  return await callMethod("tasks.task.add", { fields });
 }
 
 export async function completeTask(taskId: string): Promise<void> {
-  await callMethod('tasks.task.complete', { taskId });
+  await callMethod("tasks.task.complete", { taskId });
 }
 
 export async function startTask(taskId: string): Promise<void> {
-  await callMethod('tasks.task.start', { taskId });
+  await callMethod("tasks.task.start", { taskId });
 }
 
 export async function pauseTask(taskId: string): Promise<void> {
-  await callMethod('tasks.task.pause', { taskId });
+  await callMethod("tasks.task.pause", { taskId });
 }
 
 export async function deferTask(taskId: string): Promise<void> {
-  await callMethod('tasks.task.defer', { taskId });
+  await callMethod("tasks.task.defer", { taskId });
 }
 
 export async function renewTask(taskId: string): Promise<void> {
-  await callMethod('tasks.task.renew', { taskId });
+  await callMethod("tasks.task.renew", { taskId });
 }
 
 // Comments
 export async function getComments(taskId: string): Promise<TaskComment[]> {
-  const result = await callMethod('task.commentitem.getlist', { TASKID: taskId });
+  const result = await callMethod("task.commentitem.getlist", {
+    TASKID: taskId,
+  });
   return Array.isArray(result) ? result : [];
 }
 
-export async function addComment(taskId: string, message: string): Promise<any> {
-  return await callMethod('task.commentitem.add', {
+export async function addComment(
+  taskId: string,
+  message: string,
+): Promise<any> {
+  return await callMethod("task.commentitem.add", {
     TASKID: taskId,
     FIELDS: { POST_MESSAGE: message },
   });
@@ -105,30 +117,44 @@ export async function addComment(taskId: string, message: string): Promise<any> 
 
 // Time tracking
 export async function getElapsedTime(taskId: string): Promise<ElapsedItem[]> {
-  const result = await callMethod('task.elapseditem.getlist', { TASKID: taskId });
+  const result = await callMethod("task.elapseditem.getlist", {
+    TASKID: taskId,
+  });
   return Array.isArray(result) ? result : [];
 }
 
-export async function addElapsedTime(taskId: string, seconds: number, comment: string = ''): Promise<any> {
-  return await callMethod('task.elapseditem.add', {
+export async function addElapsedTime(
+  taskId: string,
+  seconds: number,
+  comment: string = "",
+): Promise<any> {
+  return await callMethod("task.elapseditem.add", {
     TASKID: taskId,
     ARFIELDS: { SECONDS: seconds, COMMENT_TEXT: comment },
   });
 }
 
 // Stages (Kanban)
-export async function getStages(groupId: string = '0'): Promise<Record<string, Stage>> {
-  return await callMethod('task.stages.get', {
-    entityId: groupId === '0' ? 0 : groupId,
-    isAdmin: 'N',
+export async function getStages(
+  groupId: string = "0",
+): Promise<Record<string, Stage>> {
+  return await callMethod("task.stages.get", {
+    entityId: groupId === "0" ? 0 : groupId,
+    isAdmin: "N",
   });
 }
 
-export async function moveTaskToStage(taskId: string, stageId: string): Promise<void> {
-  await callMethod('task.stages.movetask', { id: taskId, stageId });
+export async function moveTaskToStage(
+  taskId: string,
+  stageId: string,
+): Promise<void> {
+  await callMethod("task.stages.movetask", { id: taskId, stageId });
 }
 
 // Delegate
-export async function delegateTask(taskId: string, userId: string): Promise<void> {
-  await callMethod('tasks.task.delegate', { taskId, userId });
+export async function delegateTask(
+  taskId: string,
+  userId: string,
+): Promise<void> {
+  await callMethod("tasks.task.delegate", { taskId, userId });
 }

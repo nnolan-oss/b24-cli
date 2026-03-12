@@ -7,7 +7,7 @@ set -euo pipefail
 # ─────────────────────────────────────────────
 
 APP_NAME="b24-cli"
-REPO_URL="https://github.com/nnolan-oss/b24-cli"  # TODO: update after publish
+REPO_URL="https://github.com/nnolan-oss/b24-cli"  
 MIN_NODE_VERSION=18
 
 # Colors

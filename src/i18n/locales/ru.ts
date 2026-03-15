@@ -142,13 +142,16 @@ export default {
   "delegate.select": "Выберите нового ответственного:",
 
   // Move Stage
-  "stage.title": "Переместить в стадию",
+  "stage.title": "Переместить на стадию (Канбан)",
   "stage.loading": "Загрузка стадий...",
   "stage.moving": "Перемещение задачи...",
-  "stage.moved": "Задача успешно перемещена!",
-  "stage.empty": "Стадии не найдены. Задача в Kanban-проекте?",
-  "stage.select": "Выберите стадию:",
+  "stage.moved": "Задача перемещена.",
+  "stage.empty": "Для этого проекта не найдено стадий.",
+  "stage.empty_scrum": "Для активного спринта не найдено стадий.",
+  "stage.select": "Выберите новую стадию",
   "stage.current": "(текущая)",
+  "stage.scrum_move_error":
+    "Примечание: Перемещение задач в Scrum/Sprint через API может не поддерживаться Bitrix24.",
 
   // Language
   "lang.title": "Сменить язык",

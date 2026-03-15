@@ -172,6 +172,10 @@ export function App({ command, args, webhookUrl }: AppProps) {
           taskId={selectedTaskId}
           onAction={(action, task) => {
             setCurrentTask(task);
+            if (action === "back") {
+              goBack();
+              return;
+            }
             const actionMap: Record<string, Screen> = {
               status: "change-status",
               comment: "add-comment",
@@ -185,6 +189,15 @@ export function App({ command, args, webhookUrl }: AppProps) {
           onBack={goBack}
         />
       );
+
+    case "move-task":
+      return currentTask ? (
+        <MoveTask
+          task={currentTask}
+          onDone={() => setScreen("task-detail")}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
 
     case "change-status":
       return currentTask ? (
@@ -224,15 +237,6 @@ export function App({ command, args, webhookUrl }: AppProps) {
     case "delegate":
       return currentTask ? (
         <DelegateTask
-          task={currentTask}
-          onDone={() => setScreen("task-detail")}
-          onBack={() => setScreen("task-detail")}
-        />
-      ) : null;
-
-    case "move-task":
-      return currentTask ? (
-        <MoveTask
           task={currentTask}
           onDone={() => setScreen("task-detail")}
           onBack={() => setScreen("task-detail")}

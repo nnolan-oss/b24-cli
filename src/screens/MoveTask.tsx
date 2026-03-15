@@ -1,7 +1,14 @@
 import { Box, Text, useInput } from "ink";
 import SelectInput from "ink-select-input";
 import { useState } from "react";
-import { getStages, moveTaskToStage, type Task } from "../api/tasks.js";
+import {
+  getScrumKanbanStages,
+  getSprintList,
+  moveTaskToStage,
+  type Sprint,
+  type Stage,
+  type Task,
+} from "../api/tasks.js";
 import { ErrorMessage } from "../components/ErrorMessage.js";
 import { Header } from "../components/Header.js";
 import { Loading } from "../components/Loading.js";
@@ -19,7 +26,29 @@ export function MoveTask({ task, onDone, onBack }: MoveTaskProps) {
     data: stages,
     loading,
     error: fetchError,
-  } = useAsync(() => getStages(task.groupId || "0"), [task.groupId]);
+  } = useAsync(async () => {
+    if (!task.groupId) return {};
+
+    const sprints = await getSprintList(task.groupId);
+    const activeSprint = sprints.find((s: Sprint) => s.status === "active");
+
+    if (activeSprint) {
+      const scrumStages: any[] = await getScrumKanbanStages(activeSprint.id);
+      return scrumStages.reduce((acc: Record<string, Stage>, stage) => {
+        acc[stage.id] = {
+          ID: String(stage.id),
+          TITLE: stage.name,
+          SORT: String(stage.sort),
+          COLOR: stage.color,
+          ENTITY_ID: activeSprint.id, // Missing ENTITY_ID added
+        };
+        return acc;
+      }, {});
+    }
+
+    return {}; // Fallback if no active sprint
+  }, [task.groupId]);
+
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -50,14 +79,16 @@ export function MoveTask({ task, onDone, onBack }: MoveTaskProps) {
     return (
       <Box flexDirection="column">
         <Header title={t("stage.title")} />
-        <Text dimColor>{t("stage.empty")}</Text>
+        <Text dimColor>{t("stage.empty_scrum")}</Text>
         <Text dimColor>{t("app.press_esc")}</Text>
       </Box>
     );
   }
 
-  const items = stageEntries.map(([_key, stage]) => ({
-    label: `${stage.TITLE}${stage.ID === task.stageId ? ` ${t("stage.current")}` : ""}`,
+  const items = stageEntries.map(([_key, stage]: [string, Stage]) => ({
+    label: `${stage.TITLE}${
+      stage.ID === task.stageId ? ` ${t("stage.current")}` : ""
+    }`,
     value: stage.ID,
   }));
 
@@ -70,9 +101,9 @@ export function MoveTask({ task, onDone, onBack }: MoveTaskProps) {
     setError(null);
     try {
       await moveTaskToStage(task.id, item.value);
-      setSuccess(true);
+      onDone();
     } catch (err: any) {
-      setError(err.message);
+      setError(`${err.message}. ${t("stage.scrum_move_error")}`);
       setProcessing(false);
     }
   };

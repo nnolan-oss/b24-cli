@@ -137,7 +137,7 @@ export default {
   "delegate.title": "Mas'ul o'zgartirish",
   "delegate.loading": "Foydalanuvchilar yuklanmoqda...",
   "delegate.changing": "Mas'ul o'zgartirilmoqda...",
-  "delegate.changed": "Mas'ul muvaffaqiyatli o'zgartirildi!",
+  "delegate.changed": "Mas'ul shaxs o'zgartirildi.",
   "delegate.current": "Joriy",
   "delegate.select": "Yangi mas'ulni tanlang:",
 
@@ -145,13 +145,15 @@ export default {
   "stage.title": "Bosqichga ko'chirish",
   "stage.loading": "Bosqichlar yuklanmoqda...",
   "stage.moving": "Vazifa ko'chirilmoqda...",
-  "stage.moved": "Vazifa muvaffaqiyatli ko'chirildi!",
-  "stage.empty":
-    "Bosqichlar topilmadi. Vazifa kanban loyihasiga tegishli emasmi?",
-  "stage.select": "Bosqichni tanlang:",
+  "stage.moved": "Vazifa ko'chirildi.",
+  "stage.empty": "Ushbu loyiha uchun bosqichlar topilmadi.",
+  "stage.empty_scrum": "Aktiv sprint uchun bosqichlar topilmadi.",
+  "stage.select": "Yangi bosqichni tanlang",
   "stage.current": "(joriy)",
+  "stage.scrum_move_error":
+    "Eslatma: Scrum/Sprintdagi vazifalarni API orqali ko'chirish Bitrix24 tomonidan qo'llab-quvvatlanmasligi mumkin.",
 
-  // Language
+  // Til
   "lang.title": "Tilni o'zgartirish",
   "lang.select": "Tilni tanlang:",
   "lang.changed": "Til o'zgartirildi:",

@@ -52,7 +52,7 @@ export async function getMyTasks(
   const result = await callMethod("tasks.task.list", {
     order: { ID: "desc" },
     filter: { RESPONSIBLE_ID: params.userId || 0, ...params.filter },
-    select: ["*", "UF_*"],
+    select: ["*", "UF_*", "GROUP_ID"],
     start: params.start || 0,
   });
   return { tasks: result.tasks || [], total: result.total || 0 };
@@ -142,6 +142,7 @@ export async function getStages(
 ): Promise<Record<string, Stage>> {
   return await callMethod("task.stages.get", {
     entityId: groupId === "0" ? 0 : groupId,
+    entityType: "G",
     isAdmin: "N",
   });
 }
@@ -159,4 +160,43 @@ export async function delegateTask(
   userId: string,
 ): Promise<void> {
   await callMethod("tasks.task.delegate", { taskId, userId });
+}
+
+// Sprint
+export async function getSprint(taskId: string): Promise<string | null> {
+  try {
+    const result = await callMethod("tasks.api.scrum.task.get", {
+      taskId: parseInt(taskId),
+    });
+    return result?.sprintId ? String(result.sprintId) : null;
+  } catch {
+    return null;
+  }
+}
+
+export interface Sprint {
+  id: string;
+  groupId: number;
+  name: string;
+  status: "pending" | "active" | "completed";
+}
+
+// Get sprint list for a group and find active sprint's stages
+export async function getSprintList(groupId: string): Promise<Sprint[]> {
+  try {
+    const result = await callMethod("tasks.api.scrum.sprint.list", {
+      groupId: parseInt(groupId),
+    });
+    return Array.isArray(result) ? result : [];
+  } catch {
+    return [];
+  }
+}
+
+// Scrum kanban stages
+export async function getScrumKanbanStages(sprintId: string): Promise<Stage[]> {
+  const result = await callMethod("tasks.api.scrum.kanban.getStages", {
+    sprintId: parseInt(sprintId),
+  });
+  return Array.isArray(result) ? result : Object.values(result || {});
 }

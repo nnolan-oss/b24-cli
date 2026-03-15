@@ -141,13 +141,16 @@ export default {
   "delegate.select": "Select new responsible:",
 
   // Move Stage
-  "stage.title": "Move to stage",
+  "stage.title": "Move to stage (Kanban)",
   "stage.loading": "Loading stages...",
   "stage.moving": "Moving task...",
-  "stage.moved": "Task moved successfully!",
-  "stage.empty": "No stages found. Is the task in a Kanban project?",
-  "stage.select": "Select stage:",
+  "stage.moved": "Task moved.",
+  "stage.empty": "No stages found for this project.",
+  "stage.empty_scrum": "No stages found for the active sprint.",
+  "stage.select": "Select new stage",
   "stage.current": "(current)",
+  "stage.scrum_move_error":
+    "Note: Moving tasks within a Scrum/Sprint via API may not be supported by Bitrix24.",
 
   // Language
   "lang.title": "Change language",

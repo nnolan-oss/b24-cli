@@ -97,6 +97,7 @@ export default {
   "action.move_stage": "Bosqichga ko'chirish (Kanban)",
   "action.edit": "Tahrirlash",
   "action.delete": "O'chirish",
+  "action.history": "Tarixni ko'rish",
   "action.back": "Orqaga",
 
   // Status
@@ -166,6 +167,11 @@ export default {
   "stage.current": "(joriy)",
   "stage.scrum_move_error":
     "Eslatma: Scrum/Sprintdagi vazifalarni API orqali ko'chirish Bitrix24 tomonidan qo'llab-quvvatlanmasligi mumkin.",
+
+  // Tarix
+  "history.title": "Vazifa tarixi",
+  "history.loading": "Tarix yuklanmoqda...",
+  "history.empty": "Tarix yozuvlari topilmadi.",
 
   // Til
   "lang.title": "Tilni o'zgartirish",

@@ -19,6 +19,7 @@ import { MoveTask } from "./screens/MoveTask.js";
 import { TaskDetail } from "./screens/TaskDetail.js";
 import { TaskList } from "./screens/TaskList.js";
 import { ViewComments } from "./screens/ViewComments.js";
+import { ViewHistory } from "./screens/ViewHistory.js";
 import {
   clearConfig,
   isAuthenticated,
@@ -40,6 +41,7 @@ type Screen =
   | "create-task"
   | "edit-task"
   | "delete-confirm"
+  | "view-history"
   | "language";
 
 interface AppProps {
@@ -199,6 +201,7 @@ export function App({ command, args, webhookUrl }: AppProps) {
               move: "move-task",
               edit: "edit-task",
               delete: "delete-confirm",
+              history: "view-history",
             };
             setScreen(actionMap[action] as Screen);
           }}
@@ -259,6 +262,14 @@ export function App({ command, args, webhookUrl }: AppProps) {
     case "view-comments":
       return currentTask ? (
         <ViewComments
+          task={currentTask}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
+
+    case "view-history":
+      return currentTask ? (
+        <ViewHistory
           task={currentTask}
           onBack={() => setScreen("task-detail")}
         />

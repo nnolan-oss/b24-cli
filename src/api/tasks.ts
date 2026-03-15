@@ -245,3 +245,25 @@ export async function updateChecklistItem(
     FIELDS: { IS_COMPLETE: isComplete ? "Y" : "N" },
   });
 }
+
+// History
+export interface HistoryItem {
+  id: string;
+  createdDate: string;
+  field: string;
+  value: {
+    from: any;
+    to: any;
+  };
+  user: {
+    id: string;
+    name: string;
+  };
+}
+
+export async function getTaskHistory(taskId: string): Promise<HistoryItem[]> {
+  const result = await callMethod("tasks.task.history.list", {
+    taskId: parseInt(taskId),
+  });
+  return result?.list || [];
+}

@@ -96,6 +96,7 @@ export default {
   "action.move_stage": "Move to stage (Kanban)",
   "action.edit": "Edit task",
   "action.delete": "Delete task",
+  "action.history": "View history",
   "action.back": "Back",
 
   // Status
@@ -164,6 +165,11 @@ export default {
   "stage.current": "(current)",
   "stage.scrum_move_error":
     "Note: Moving tasks within a Scrum/Sprint via API may not be supported by Bitrix24.",
+
+  // History
+  "history.title": "Task History",
+  "history.loading": "Loading history...",
+  "history.empty": "No history events found.",
 
   // Language
   "lang.title": "Change language",

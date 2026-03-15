@@ -22,6 +22,9 @@ type Action =
   | "delegate"
   | "move"
   | "comments"
+  | "edit"
+  | "delete"
+  | "history"
   | "back";
 
 interface TaskDetailProps {
@@ -97,6 +100,7 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
     { label: t("action.move_stage"), value: "move" as Action },
     { label: t("action.edit"), value: "edit" as Action },
     { label: t("action.delete"), value: "delete" as Action },
+    { label: t("action.history"), value: "history" as Action },
     { label: t("action.back"), value: "back" as Action },
   ];
 

@@ -96,6 +96,7 @@ export default {
   "action.move_stage": "Переместить на стадию (Канбан)",
   "action.edit": "Редактировать",
   "action.delete": "Удалить",
+  "action.history": "Посмотреть историю",
   "action.back": "Назад",
 
   // Status
@@ -165,6 +166,11 @@ export default {
   "stage.current": "(текущая)",
   "stage.scrum_move_error":
     "Примечание: Перемещение задач в Scrum/Sprint через API может не поддерживаться Bitrix24.",
+
+  // History
+  "history.title": "История Задачи",
+  "history.loading": "Загрузка истории...",
+  "history.empty": "Записей в истории не найдено.",
 
   // Language
   "lang.title": "Сменить язык",

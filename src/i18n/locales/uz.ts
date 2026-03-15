@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - yangilash",
   "app.press_q": "Q - chiqish",
   "app.not_found": "Topilmadi",
+  "app.yes": "Ha",
+  "app.no": "Yo'q",
 
   // Auth
   "auth.not_configured":
@@ -82,15 +84,19 @@ export default {
   "task.creating": "Vazifa yaratilmoqda...",
   "task.edit_title": "Vazifani Tahrirlash",
   "task.updating": "Vazifa yangilanmoqda...",
+  "task.deleting": "Vazifa o'chirilmoqda...",
+  "task.delete_confirm_title":
+    "Haqiqatan ham ushbu vazifani o'chirmoqchimisiz?",
 
   // Amallar
   "action.change_status": "Statusni o'zgartirish",
-  "action.add_comment": "Izoh yozish",
+  "action.add_comment": "Izoh qo'shish",
   "action.view_comments": "Izohlarni ko'rish",
   "action.add_time": "Vaqt qo'shish",
   "action.delegate": "Mas'ulni o'zgartirish",
   "action.move_stage": "Bosqichga ko'chirish (Kanban)",
   "action.edit": "Tahrirlash",
+  "action.delete": "O'chirish",
   "action.back": "Orqaga",
 
   // Status

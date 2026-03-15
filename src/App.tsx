@@ -1,7 +1,7 @@
 import { Box, Text, useApp } from "ink";
 import { useEffect, useState } from "react";
 import { resetClient } from "./api/client.js";
-import type { Task } from "./api/tasks.js";
+import { deleteTask, type Task } from "./api/tasks.js";
 import { getCurrentUser } from "./api/users.js";
 import { ErrorMessage } from "./components/ErrorMessage.js";
 import { Loading } from "./components/Loading.js";
@@ -10,6 +10,7 @@ import { AddComment } from "./screens/AddComment.js";
 import { AddTime } from "./screens/AddTime.js";
 import { ChangeLanguage } from "./screens/ChangeLanguage.js";
 import { ChangeStatus } from "./screens/ChangeStatus.js";
+import { ConfirmDelete } from "./screens/ConfirmDelete.js";
 import { CreateTask } from "./screens/CreateTask.js";
 import { DelegateTask } from "./screens/DelegateTask.js";
 import { EditTask } from "./screens/EditTask.js";
@@ -38,6 +39,7 @@ type Screen =
   | "move-task"
   | "create-task"
   | "edit-task"
+  | "delete-confirm"
   | "language";
 
 interface AppProps {
@@ -196,10 +198,25 @@ export function App({ command, args, webhookUrl }: AppProps) {
               delegate: "delegate",
               move: "move-task",
               edit: "edit-task",
+              delete: "delete-confirm",
             };
             setScreen(actionMap[action] as Screen);
           }}
           onBack={goBack}
+        />
+      );
+
+    case "delete-confirm":
+      return (
+        <ConfirmDelete
+          onCancel={() => setScreen("task-detail")}
+          onConfirm={() => {
+            if (currentTask) {
+              deleteTask(currentTask.id).then(() => {
+                setScreen("my-tasks");
+              });
+            }
+          }}
         />
       );
 

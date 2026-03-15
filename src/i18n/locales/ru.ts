@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - обновить",
   "app.press_q": "Q - выход",
   "app.not_found": "Не найдено",
+  "app.yes": "Да",
+  "app.no": "Нет",
 
   // Auth
   "auth.not_configured":
@@ -82,6 +84,8 @@ export default {
   "task.creating": "Создание задачи...",
   "task.edit_title": "Редактировать Задачу",
   "task.updating": "Обновление задачи...",
+  "task.deleting": "Удаление задачи...",
+  "task.delete_confirm_title": "Вы уверены, что хотите удалить эту задачу?",
 
   // Действия
   "action.change_status": "Изменить статус",
@@ -91,6 +95,7 @@ export default {
   "action.delegate": "Сменить ответственного",
   "action.move_stage": "Переместить на стадию (Канбан)",
   "action.edit": "Редактировать",
+  "action.delete": "Удалить",
   "action.back": "Назад",
 
   // Status

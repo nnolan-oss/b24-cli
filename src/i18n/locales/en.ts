@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - refresh",
   "app.press_q": "Q - quit",
   "app.not_found": "Not found",
+  "app.yes": "Yes",
+  "app.no": "No",
 
   // Auth
   "auth.not_configured":
@@ -82,6 +84,8 @@ export default {
   "task.creating": "Creating task...",
   "task.edit_title": "Edit Task",
   "task.updating": "Updating task...",
+  "task.deleting": "Deleting task...",
+  "task.delete_confirm_title": "Are you sure you want to delete this task?",
 
   // Actions
   "action.change_status": "Change status",
@@ -91,6 +95,7 @@ export default {
   "action.delegate": "Change responsible",
   "action.move_stage": "Move to stage (Kanban)",
   "action.edit": "Edit task",
+  "action.delete": "Delete task",
   "action.back": "Back",
 
   // Status

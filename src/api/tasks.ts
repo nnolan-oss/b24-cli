@@ -73,6 +73,10 @@ export async function updateTask(
   await callMethod("tasks.task.update", { taskId, fields });
 }
 
+export async function deleteTask(taskId: string): Promise<void> {
+  await callMethod("tasks.task.delete", { taskId });
+}
+
 export async function createTask(fields: Record<string, any>): Promise<any> {
   return await callMethod("tasks.task.add", { fields });
 }

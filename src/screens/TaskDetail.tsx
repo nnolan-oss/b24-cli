@@ -61,6 +61,11 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
             {task.title}
           </Text>
         </Box>
+        {task.description && (
+          <Box marginTop={1}>
+            <Text wrap="wrap">{task.description}</Text>
+          </Box>
+        )}
         <Box marginTop={1} flexDirection="column">
           <Box>
             <Text dimColor>{t("task.status")}: </Text>

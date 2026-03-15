@@ -65,6 +65,7 @@ export function TaskList({
       <SelectInput
         items={items}
         onSelect={(item: any) => onSelect(item.value)}
+        limit={10}
         itemComponent={({ isSelected, label }: any) => {
           const task = items.find((i) => i.label === label)?.task;
           return (

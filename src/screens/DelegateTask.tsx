@@ -72,7 +72,7 @@ export function DelegateTask({ task, onDone, onBack }: DelegateTaskProps) {
       <Text bold color="cyan">
         {t("delegate.select")}
       </Text>
-      <SelectInput items={items} onSelect={handleSelect} />
+      <SelectInput items={items} onSelect={handleSelect} limit={10} />
     </Box>
   );
 }

@@ -95,7 +95,7 @@ export function ChangeStatus({ task, onDone, onBack }: ChangeStatusProps) {
         {t("status.current")}: {task.status}
       </Text>
       {error && <ErrorMessage message={error} />}
-      <SelectInput items={statusActions} onSelect={handleSelect} />
+      <SelectInput items={statusActions} onSelect={handleSelect} limit={10} />
     </Box>
   );
 }

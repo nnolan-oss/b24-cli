@@ -117,6 +117,7 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
         </Text>
         <SelectInput
           items={actions}
+          limit={10}
           onSelect={(item: { value: Action }) => {
             if (item.value === "back") {
               onBack();

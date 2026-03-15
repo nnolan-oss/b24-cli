@@ -87,7 +87,7 @@ export function MoveTask({ task, onDone, onBack }: MoveTaskProps) {
       <Text bold color="cyan">
         {t("stage.select")}
       </Text>
-      <SelectInput items={items} onSelect={handleSelect} />
+      <SelectInput items={items} onSelect={handleSelect} limit={10} />
     </Box>
   );
 }

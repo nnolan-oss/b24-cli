@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - yangilash",
   "app.press_q": "Q - chiqish",
   "app.not_found": "Topilmadi",
+  "app.yes": "Ha",
+  "app.no": "Yo'q",
 
   // Auth
   "auth.not_configured":
@@ -47,8 +49,9 @@ export default {
   "menu.title": "Bosh menyu",
   "menu.my_tasks": "Mening vazifalarim",
   "menu.all_tasks": "Barcha vazifalar",
+  "menu.create_task": "Yangi vazifa yaratish",
   "menu.language": "Tilni o'zgartirish",
-  "menu.logout": "Chiqish (logout)",
+  "menu.logout": "Chiqish",
   "menu.exit": "Dasturdan chiqish",
 
   // Tasks
@@ -71,18 +74,30 @@ export default {
   "task.creator": "Yaratuvchi",
   "task.group": "Guruh",
   "task.deadline": "Muddat",
+  "task.description": "Tavsif",
   "task.time_spent": "Sarflangan vaqt",
   "task.hours": "soat",
   "task.minutes": "daqiqa",
+  "task.checklist": "Cheklist",
   "task.actions": "Amallar:",
+  "task.create_title": "Yangi Vazifa Yaratish",
+  "task.creating": "Vazifa yaratilmoqda...",
+  "task.edit_title": "Vazifani Tahrirlash",
+  "task.updating": "Vazifa yangilanmoqda...",
+  "task.deleting": "Vazifa o'chirilmoqda...",
+  "task.delete_confirm_title":
+    "Haqiqatan ham ushbu vazifani o'chirmoqchimisiz?",
 
-  // Actions
-  "action.change_status": "Status o'zgartirish",
-  "action.add_comment": "Izoh yozish",
+  // Amallar
+  "action.change_status": "Statusni o'zgartirish",
+  "action.add_comment": "Izoh qo'shish",
   "action.view_comments": "Izohlarni ko'rish",
   "action.add_time": "Vaqt qo'shish",
-  "action.delegate": "Mas'ul o'zgartirish",
+  "action.delegate": "Mas'ulni o'zgartirish",
   "action.move_stage": "Bosqichga ko'chirish (Kanban)",
+  "action.edit": "Tahrirlash",
+  "action.delete": "O'chirish",
+  "action.history": "Tarixni ko'rish",
   "action.back": "Orqaga",
 
   // Status
@@ -137,7 +152,7 @@ export default {
   "delegate.title": "Mas'ul o'zgartirish",
   "delegate.loading": "Foydalanuvchilar yuklanmoqda...",
   "delegate.changing": "Mas'ul o'zgartirilmoqda...",
-  "delegate.changed": "Mas'ul muvaffaqiyatli o'zgartirildi!",
+  "delegate.changed": "Mas'ul shaxs o'zgartirildi.",
   "delegate.current": "Joriy",
   "delegate.select": "Yangi mas'ulni tanlang:",
 
@@ -145,13 +160,20 @@ export default {
   "stage.title": "Bosqichga ko'chirish",
   "stage.loading": "Bosqichlar yuklanmoqda...",
   "stage.moving": "Vazifa ko'chirilmoqda...",
-  "stage.moved": "Vazifa muvaffaqiyatli ko'chirildi!",
-  "stage.empty":
-    "Bosqichlar topilmadi. Vazifa kanban loyihasiga tegishli emasmi?",
-  "stage.select": "Bosqichni tanlang:",
+  "stage.moved": "Vazifa ko'chirildi.",
+  "stage.empty": "Ushbu loyiha uchun bosqichlar topilmadi.",
+  "stage.empty_scrum": "Aktiv sprint uchun bosqichlar topilmadi.",
+  "stage.select": "Yangi bosqichni tanlang",
   "stage.current": "(joriy)",
+  "stage.scrum_move_error":
+    "Eslatma: Scrum/Sprintdagi vazifalarni API orqali ko'chirish Bitrix24 tomonidan qo'llab-quvvatlanmasligi mumkin.",
 
-  // Language
+  // Tarix
+  "history.title": "Vazifa tarixi",
+  "history.loading": "Tarix yuklanmoqda...",
+  "history.empty": "Tarix yozuvlari topilmadi.",
+
+  // Til
   "lang.title": "Tilni o'zgartirish",
   "lang.select": "Tilni tanlang:",
   "lang.changed": "Til o'zgartirildi:",

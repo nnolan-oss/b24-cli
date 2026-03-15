@@ -52,7 +52,7 @@ export async function getMyTasks(
   const result = await callMethod("tasks.task.list", {
     order: { ID: "desc" },
     filter: { RESPONSIBLE_ID: params.userId || 0, ...params.filter },
-    select: ["*", "UF_*"],
+    select: ["*", "UF_*", "GROUP_ID"],
     start: params.start || 0,
   });
   return { tasks: result.tasks || [], total: result.total || 0 };
@@ -71,6 +71,10 @@ export async function updateTask(
   fields: Record<string, any>,
 ): Promise<void> {
   await callMethod("tasks.task.update", { taskId, fields });
+}
+
+export async function deleteTask(taskId: string): Promise<void> {
+  await callMethod("tasks.task.delete", { taskId });
 }
 
 export async function createTask(fields: Record<string, any>): Promise<any> {
@@ -142,6 +146,7 @@ export async function getStages(
 ): Promise<Record<string, Stage>> {
   return await callMethod("task.stages.get", {
     entityId: groupId === "0" ? 0 : groupId,
+    entityType: "G",
     isAdmin: "N",
   });
 }
@@ -159,4 +164,106 @@ export async function delegateTask(
   userId: string,
 ): Promise<void> {
   await callMethod("tasks.task.delegate", { taskId, userId });
+}
+
+// Sprint
+export async function getSprint(taskId: string): Promise<string | null> {
+  try {
+    const result = await callMethod("tasks.api.scrum.task.get", {
+      taskId: parseInt(taskId),
+    });
+    return result?.sprintId ? String(result.sprintId) : null;
+  } catch {
+    return null;
+  }
+}
+
+export interface Sprint {
+  id: string;
+  groupId: number;
+  name: string;
+  status: "pending" | "active" | "completed";
+}
+
+// Get sprint list for a group and find active sprint's stages
+export async function getSprintList(groupId: string): Promise<Sprint[]> {
+  try {
+    const result = await callMethod("tasks.api.scrum.sprint.list", {
+      groupId: parseInt(groupId),
+    });
+    return Array.isArray(result) ? result : [];
+  } catch {
+    return [];
+  }
+}
+
+// Scrum kanban stages
+export async function getScrumKanbanStages(sprintId: string): Promise<Stage[]> {
+  const result = await callMethod("tasks.api.scrum.kanban.getStages", {
+    sprintId: parseInt(sprintId),
+  });
+  return Array.isArray(result) ? result : Object.values(result || {});
+}
+
+export async function addTaskToScrumKanban(
+  sprintId: string,
+  taskId: string,
+  stageId: string,
+): Promise<void> {
+  await callMethod("tasks.api.scrum.kanban.addTask", {
+    sprintId: parseInt(sprintId),
+    taskId: parseInt(taskId),
+    stageId: parseInt(stageId),
+  });
+}
+
+export interface ChecklistItem {
+  ID: string;
+  TITLE: string;
+  IS_COMPLETE: "Y" | "N";
+  SORT_INDEX: string;
+}
+
+// Checklist
+export async function getChecklistItems(
+  taskId: string,
+): Promise<ChecklistItem[]> {
+  const result = await callMethod("task.checklistitem.getlist", {
+    TASKID: parseInt(taskId),
+  });
+  return Array.isArray(result) ? result : [];
+}
+
+export async function updateChecklistItem(
+  taskId: string,
+  itemId: string,
+  isComplete: boolean,
+): Promise<void> {
+  await callMethod("task.checklistitem.update", {
+    TASKID: parseInt(taskId),
+    ITEMID: parseInt(itemId),
+    FIELDS: { IS_COMPLETE: isComplete ? "Y" : "N" },
+  });
+}
+
+// History
+export interface HistoryItem {
+  id: string;
+  createdDate: string;
+  field: string;
+  value: {
+    from: any;
+    to: any;
+  };
+  user: {
+    id: string;
+    name: string;
+  };
+}
+
+export async function getTaskHistory(taskId: string): Promise<HistoryItem[]> {
+  const result = await callMethod("tasks.task.history.list", {
+    taskId: parseInt(taskId),
+  });
+  return result?.list || [];
 }

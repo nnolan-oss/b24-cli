@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - обновить",
   "app.press_q": "Q - выход",
   "app.not_found": "Не найдено",
+  "app.yes": "Да",
+  "app.no": "Нет",
 
   // Auth
   "auth.not_configured":
@@ -47,9 +49,10 @@ export default {
   "menu.title": "Главное меню",
   "menu.my_tasks": "Мои задачи",
   "menu.all_tasks": "Все задачи",
+  "menu.create_task": "Создать новую задачу",
   "menu.language": "Сменить язык",
-  "menu.logout": "Выход (logout)",
-  "menu.exit": "Выйти из программы",
+  "menu.logout": "Выйти",
+  "menu.exit": "Выйти из приложения",
 
   // Tasks
   "tasks.title": "Мои задачи",
@@ -68,21 +71,32 @@ export default {
   "task.status": "Статус",
   "task.priority": "Приоритет",
   "task.responsible": "Ответственный",
-  "task.creator": "Создатель",
+  "task.creator": "Постановщик",
   "task.group": "Группа",
   "task.deadline": "Крайний срок",
-  "task.time_spent": "Затрачено",
+  "task.description": "Описание",
+  "task.time_spent": "Затрачено времени",
   "task.hours": "ч",
   "task.minutes": "мин",
+  "task.checklist": "Чек-лист",
   "task.actions": "Действия:",
+  "task.create_title": "Создать Новую Задачу",
+  "task.creating": "Создание задачи...",
+  "task.edit_title": "Редактировать Задачу",
+  "task.updating": "Обновление задачи...",
+  "task.deleting": "Удаление задачи...",
+  "task.delete_confirm_title": "Вы уверены, что хотите удалить эту задачу?",
 
-  // Actions
+  // Действия
   "action.change_status": "Изменить статус",
-  "action.add_comment": "Написать комментарий",
+  "action.add_comment": "Добавить комментарий",
   "action.view_comments": "Просмотр комментариев",
   "action.add_time": "Добавить время",
   "action.delegate": "Сменить ответственного",
-  "action.move_stage": "Переместить в стадию (Kanban)",
+  "action.move_stage": "Переместить на стадию (Канбан)",
+  "action.edit": "Редактировать",
+  "action.delete": "Удалить",
+  "action.history": "Посмотреть историю",
   "action.back": "Назад",
 
   // Status
@@ -142,13 +156,21 @@ export default {
   "delegate.select": "Выберите нового ответственного:",
 
   // Move Stage
-  "stage.title": "Переместить в стадию",
+  "stage.title": "Переместить на стадию (Канбан)",
   "stage.loading": "Загрузка стадий...",
   "stage.moving": "Перемещение задачи...",
-  "stage.moved": "Задача успешно перемещена!",
-  "stage.empty": "Стадии не найдены. Задача в Kanban-проекте?",
-  "stage.select": "Выберите стадию:",
+  "stage.moved": "Задача перемещена.",
+  "stage.empty": "Для этого проекта не найдено стадий.",
+  "stage.empty_scrum": "Для активного спринта не найдено стадий.",
+  "stage.select": "Выберите новую стадию",
   "stage.current": "(текущая)",
+  "stage.scrum_move_error":
+    "Примечание: Перемещение задач в Scrum/Sprint через API может не поддерживаться Bitrix24.",
+
+  // History
+  "history.title": "История Задачи",
+  "history.loading": "Загрузка истории...",
+  "history.empty": "Записей в истории не найдено.",
 
   // Language
   "lang.title": "Сменить язык",

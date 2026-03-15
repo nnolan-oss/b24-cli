@@ -1,6 +1,13 @@
-import { Box, Text, useInput } from "ink";
+import { Box, Text, useApp, useInput } from "ink";
+import { useState } from "react";
 import SelectInput from "ink-select-input";
-import { getTask, type Task } from "../api/tasks.js";
+import {
+  getChecklistItems,
+  getTask,
+  type ChecklistItem,
+  type Task,
+  updateChecklistItem,
+} from "../api/tasks.js";
 import { ErrorMessage } from "../components/ErrorMessage.js";
 import { Header } from "../components/Header.js";
 import { Loading } from "../components/Loading.js";
@@ -15,6 +22,9 @@ type Action =
   | "delegate"
   | "move"
   | "comments"
+  | "edit"
+  | "delete"
+  | "history"
   | "back";
 
 interface TaskDetailProps {
@@ -28,10 +38,53 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
     data: task,
     loading,
     error,
+    refetch: refetchTask,
   } = useAsync(() => getTask(taskId), [taskId]);
 
-  useInput((_input: string, key: any) => {
-    if (key.escape) onBack();
+  const {
+    data: checklist,
+    loading: checklistLoading,
+    refetch: refetchChecklist,
+  } = useAsync(() => getChecklistItems(taskId), [taskId]);
+
+  const [selectedChecklistItem, setSelectedChecklistItem] = useState(0);
+  const [isChecklistMode, setIsChecklistMode] = useState(false);
+
+  useInput((input: string, key: any) => {
+    if (key.escape) {
+      if (isChecklistMode) {
+        setIsChecklistMode(false);
+      } else {
+        onBack();
+      }
+      return;
+    }
+
+    if (input === "c" && checklist && checklist.length > 0) {
+      setIsChecklistMode(!isChecklistMode);
+    }
+
+    if (isChecklistMode && checklist) {
+      if (key.upArrow) {
+        setSelectedChecklistItem(Math.max(0, selectedChecklistItem - 1));
+      }
+      if (key.downArrow) {
+        setSelectedChecklistItem(
+          Math.min(checklist.length - 1, selectedChecklistItem + 1),
+        );
+      }
+      if (key.return) {
+        const item = checklist[selectedChecklistItem];
+        if (item) {
+          updateChecklistItem(taskId, item.ID, item.IS_COMPLETE === "N").then(
+            () => {
+              refetchChecklist();
+              refetchTask();
+            },
+          );
+        }
+      }
+    }
   });
 
   if (loading) return <Loading message={t("task.loading")} />;
@@ -45,6 +98,9 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
     { label: t("action.add_time"), value: "time" as Action },
     { label: t("action.delegate"), value: "delegate" as Action },
     { label: t("action.move_stage"), value: "move" as Action },
+    { label: t("action.edit"), value: "edit" as Action },
+    { label: t("action.delete"), value: "delete" as Action },
+    { label: t("action.history"), value: "history" as Action },
     { label: t("action.back"), value: "back" as Action },
   ];
 
@@ -52,7 +108,9 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
     <Box flexDirection="column">
       <Header
         title={`${t("task.detail_title")} #${task.id}`}
-        subtitle={t("app.press_esc")}
+        subtitle={`${t("app.press_esc")}${
+          checklist && checklist.length > 0 ? " | C - checklist" : ""
+        }`}
       />
 
       <Box flexDirection="column" marginBottom={1} paddingX={1}>
@@ -61,6 +119,35 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
             {task.title}
           </Text>
         </Box>
+        {task.description && (
+          <Box marginTop={1}>
+            <Text wrap="wrap">{task.description}</Text>
+          </Box>
+        )}
+        {checklist && checklist.length > 0 && (
+          <Box marginTop={1} flexDirection="column">
+            <Text bold>{t("task.checklist")}:</Text>
+            {checklist.map((item, index) => (
+              <Box key={item.ID}>
+                <Text
+                  color={
+                    isChecklistMode && selectedChecklistItem === index
+                      ? "cyan"
+                      : undefined
+                  }
+                >
+                  {isChecklistMode && selectedChecklistItem === index
+                    ? ">"
+                    : " "}{" "}
+                </Text>
+                <Text>{item.IS_COMPLETE === "Y" ? "[x] " : "[ ] "}</Text>
+                <Text strikethrough={item.IS_COMPLETE === "Y"}>
+                  {item.TITLE}
+                </Text>
+              </Box>
+            ))}
+          </Box>
+        )}
         <Box marginTop={1} flexDirection="column">
           <Box>
             <Text dimColor>{t("task.status")}: </Text>
@@ -115,16 +202,19 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
         <Text bold color="cyan">
           {t("task.actions")}
         </Text>
-        <SelectInput
-          items={actions}
-          onSelect={(item: { value: Action }) => {
-            if (item.value === "back") {
-              onBack();
-            } else {
-              onAction(item.value, task);
-            }
-          }}
-        />
+        {!isChecklistMode && (
+          <SelectInput
+            items={actions}
+            limit={10}
+            onSelect={(item: { value: Action }) => {
+              if (item.value === "back") {
+                onBack();
+              } else {
+                onAction(item.value, task);
+              }
+            }}
+          />
+        )}
       </Box>
     </Box>
   );

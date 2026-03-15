@@ -25,3 +25,15 @@ export async function getUser(userId: string): Promise<User[]> {
 export function formatUserName(user: User): string {
   return `${user.NAME || ""} ${user.LAST_NAME || ""}`.trim();
 }
+
+export interface Project {
+  ID: string;
+  NAME: string;
+}
+
+export async function getProjects(): Promise<Project[]> {
+  const result = await callMethod("sonet_group.get", {
+    ORDER: { NAME: "ASC" },
+  });
+  return Array.isArray(result) ? result : [];
+}

@@ -16,6 +16,8 @@ export default {
   "app.press_r": "R - refresh",
   "app.press_q": "Q - quit",
   "app.not_found": "Not found",
+  "app.yes": "Yes",
+  "app.no": "No",
 
   // Auth
   "auth.not_configured":
@@ -47,6 +49,7 @@ export default {
   "menu.title": "Main Menu",
   "menu.my_tasks": "My tasks",
   "menu.all_tasks": "All tasks",
+  "menu.create_task": "Create new task",
   "menu.language": "Change language",
   "menu.logout": "Logout",
   "menu.exit": "Exit application",
@@ -71,10 +74,18 @@ export default {
   "task.creator": "Creator",
   "task.group": "Group",
   "task.deadline": "Deadline",
+  "task.description": "Description",
   "task.time_spent": "Time spent",
   "task.hours": "h",
   "task.minutes": "min",
+  "task.checklist": "Checklist",
   "task.actions": "Actions:",
+  "task.create_title": "Create New Task",
+  "task.creating": "Creating task...",
+  "task.edit_title": "Edit Task",
+  "task.updating": "Updating task...",
+  "task.deleting": "Deleting task...",
+  "task.delete_confirm_title": "Are you sure you want to delete this task?",
 
   // Actions
   "action.change_status": "Change status",
@@ -83,6 +94,9 @@ export default {
   "action.add_time": "Add time",
   "action.delegate": "Change responsible",
   "action.move_stage": "Move to stage (Kanban)",
+  "action.edit": "Edit task",
+  "action.delete": "Delete task",
+  "action.history": "View history",
   "action.back": "Back",
 
   // Status
@@ -141,13 +155,21 @@ export default {
   "delegate.select": "Select new responsible:",
 
   // Move Stage
-  "stage.title": "Move to stage",
+  "stage.title": "Move to stage (Kanban)",
   "stage.loading": "Loading stages...",
   "stage.moving": "Moving task...",
-  "stage.moved": "Task moved successfully!",
-  "stage.empty": "No stages found. Is the task in a Kanban project?",
-  "stage.select": "Select stage:",
+  "stage.moved": "Task moved.",
+  "stage.empty": "No stages found for this project.",
+  "stage.empty_scrum": "No stages found for the active sprint.",
+  "stage.select": "Select new stage",
   "stage.current": "(current)",
+  "stage.scrum_move_error":
+    "Note: Moving tasks within a Scrum/Sprint via API may not be supported by Bitrix24.",
+
+  // History
+  "history.title": "Task History",
+  "history.loading": "Loading history...",
+  "history.empty": "No history events found.",
 
   // Language
   "lang.title": "Change language",

@@ -1,7 +1,7 @@
 import { Box, Text, useApp } from "ink";
 import { useEffect, useState } from "react";
 import { resetClient } from "./api/client.js";
-import type { Task } from "./api/tasks.js";
+import { deleteTask, type Task } from "./api/tasks.js";
 import { getCurrentUser } from "./api/users.js";
 import { ErrorMessage } from "./components/ErrorMessage.js";
 import { Loading } from "./components/Loading.js";
@@ -10,12 +10,16 @@ import { AddComment } from "./screens/AddComment.js";
 import { AddTime } from "./screens/AddTime.js";
 import { ChangeLanguage } from "./screens/ChangeLanguage.js";
 import { ChangeStatus } from "./screens/ChangeStatus.js";
+import { ConfirmDelete } from "./screens/ConfirmDelete.js";
+import { CreateTask } from "./screens/CreateTask.js";
 import { DelegateTask } from "./screens/DelegateTask.js";
+import { EditTask } from "./screens/EditTask.js";
 import { MainMenu } from "./screens/MainMenu.js";
 import { MoveTask } from "./screens/MoveTask.js";
 import { TaskDetail } from "./screens/TaskDetail.js";
 import { TaskList } from "./screens/TaskList.js";
 import { ViewComments } from "./screens/ViewComments.js";
+import { ViewHistory } from "./screens/ViewHistory.js";
 import {
   clearConfig,
   isAuthenticated,
@@ -34,6 +38,10 @@ type Screen =
   | "add-time"
   | "delegate"
   | "move-task"
+  | "create-task"
+  | "edit-task"
+  | "delete-confirm"
+  | "view-history"
   | "language";
 
 interface AppProps {
@@ -133,6 +141,14 @@ export function App({ command, args, webhookUrl }: AppProps) {
         />
       );
 
+    case "create-task":
+      return (
+        <CreateTask
+          onDone={() => setScreen("my-tasks")}
+          onBack={() => setScreen("menu")}
+        />
+      );
+
     case "language":
       return (
         <ChangeLanguage
@@ -172,6 +188,10 @@ export function App({ command, args, webhookUrl }: AppProps) {
           taskId={selectedTaskId}
           onAction={(action, task) => {
             setCurrentTask(task);
+            if (action === "back") {
+              goBack();
+              return;
+            }
             const actionMap: Record<string, Screen> = {
               status: "change-status",
               comment: "add-comment",
@@ -179,12 +199,47 @@ export function App({ command, args, webhookUrl }: AppProps) {
               time: "add-time",
               delegate: "delegate",
               move: "move-task",
+              edit: "edit-task",
+              delete: "delete-confirm",
+              history: "view-history",
             };
             setScreen(actionMap[action] as Screen);
           }}
           onBack={goBack}
         />
       );
+
+    case "delete-confirm":
+      return (
+        <ConfirmDelete
+          onCancel={() => setScreen("task-detail")}
+          onConfirm={() => {
+            if (currentTask) {
+              deleteTask(currentTask.id).then(() => {
+                setScreen("my-tasks");
+              });
+            }
+          }}
+        />
+      );
+
+    case "edit-task":
+      return currentTask ? (
+        <EditTask
+          task={currentTask}
+          onDone={() => setScreen("task-detail")}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
+
+    case "move-task":
+      return currentTask ? (
+        <MoveTask
+          task={currentTask}
+          onDone={() => setScreen("task-detail")}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
 
     case "change-status":
       return currentTask ? (
@@ -212,6 +267,14 @@ export function App({ command, args, webhookUrl }: AppProps) {
         />
       ) : null;
 
+    case "view-history":
+      return currentTask ? (
+        <ViewHistory
+          task={currentTask}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
+
     case "add-time":
       return currentTask ? (
         <AddTime
@@ -224,15 +287,6 @@ export function App({ command, args, webhookUrl }: AppProps) {
     case "delegate":
       return currentTask ? (
         <DelegateTask
-          task={currentTask}
-          onDone={() => setScreen("task-detail")}
-          onBack={() => setScreen("task-detail")}
-        />
-      ) : null;
-
-    case "move-task":
-      return currentTask ? (
-        <MoveTask
           task={currentTask}
           onDone={() => setScreen("task-detail")}
           onBack={() => setScreen("task-detail")}

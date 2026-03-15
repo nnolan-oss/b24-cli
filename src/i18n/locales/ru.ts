@@ -47,9 +47,10 @@ export default {
   "menu.title": "Главное меню",
   "menu.my_tasks": "Мои задачи",
   "menu.all_tasks": "Все задачи",
+  "menu.create_task": "Создать новую задачу",
   "menu.language": "Сменить язык",
-  "menu.logout": "Выход (logout)",
-  "menu.exit": "Выйти из программы",
+  "menu.logout": "Выйти",
+  "menu.exit": "Выйти из приложения",
 
   // Tasks
   "tasks.title": "Мои задачи",
@@ -68,22 +69,28 @@ export default {
   "task.status": "Статус",
   "task.priority": "Приоритет",
   "task.responsible": "Ответственный",
-  "task.creator": "Создатель",
+  "task.creator": "Постановщик",
   "task.group": "Группа",
   "task.deadline": "Крайний срок",
+  "task.description": "Описание",
   "task.time_spent": "Затрачено времени",
   "task.hours": "ч",
   "task.minutes": "мин",
   "task.checklist": "Чек-лист",
   "task.actions": "Действия:",
+  "task.create_title": "Создать Новую Задачу",
+  "task.creating": "Создание задачи...",
+  "task.edit_title": "Редактировать Задачу",
+  "task.updating": "Обновление задачи...",
 
-  // Actions
+  // Действия
   "action.change_status": "Изменить статус",
-  "action.add_comment": "Написать комментарий",
+  "action.add_comment": "Добавить комментарий",
   "action.view_comments": "Просмотр комментариев",
   "action.add_time": "Добавить время",
   "action.delegate": "Сменить ответственного",
-  "action.move_stage": "Переместить в стадию (Kanban)",
+  "action.move_stage": "Переместить на стадию (Канбан)",
+  "action.edit": "Редактировать",
   "action.back": "Назад",
 
   // Status

@@ -47,6 +47,7 @@ export default {
   "menu.title": "Main Menu",
   "menu.my_tasks": "My tasks",
   "menu.all_tasks": "All tasks",
+  "menu.create_task": "Create new task",
   "menu.language": "Change language",
   "menu.logout": "Logout",
   "menu.exit": "Exit application",
@@ -71,11 +72,16 @@ export default {
   "task.creator": "Creator",
   "task.group": "Group",
   "task.deadline": "Deadline",
+  "task.description": "Description",
   "task.time_spent": "Time spent",
   "task.hours": "h",
   "task.minutes": "min",
   "task.checklist": "Checklist",
   "task.actions": "Actions:",
+  "task.create_title": "Create New Task",
+  "task.creating": "Creating task...",
+  "task.edit_title": "Edit Task",
+  "task.updating": "Updating task...",
 
   // Actions
   "action.change_status": "Change status",
@@ -84,6 +90,7 @@ export default {
   "action.add_time": "Add time",
   "action.delegate": "Change responsible",
   "action.move_stage": "Move to stage (Kanban)",
+  "action.edit": "Edit task",
   "action.back": "Back",
 
   // Status

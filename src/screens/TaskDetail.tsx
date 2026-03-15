@@ -95,6 +95,7 @@ export function TaskDetail({ taskId, onAction, onBack }: TaskDetailProps) {
     { label: t("action.add_time"), value: "time" as Action },
     { label: t("action.delegate"), value: "delegate" as Action },
     { label: t("action.move_stage"), value: "move" as Action },
+    { label: t("action.edit"), value: "edit" as Action },
     { label: t("action.back"), value: "back" as Action },
   ];
 

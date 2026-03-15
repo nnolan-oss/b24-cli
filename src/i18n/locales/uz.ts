@@ -47,8 +47,9 @@ export default {
   "menu.title": "Bosh menyu",
   "menu.my_tasks": "Mening vazifalarim",
   "menu.all_tasks": "Barcha vazifalar",
+  "menu.create_task": "Yangi vazifa yaratish",
   "menu.language": "Tilni o'zgartirish",
-  "menu.logout": "Chiqish (logout)",
+  "menu.logout": "Chiqish",
   "menu.exit": "Dasturdan chiqish",
 
   // Tasks
@@ -71,19 +72,25 @@ export default {
   "task.creator": "Yaratuvchi",
   "task.group": "Guruh",
   "task.deadline": "Muddat",
+  "task.description": "Tavsif",
   "task.time_spent": "Sarflangan vaqt",
   "task.hours": "soat",
   "task.minutes": "daqiqa",
   "task.checklist": "Cheklist",
   "task.actions": "Amallar:",
+  "task.create_title": "Yangi Vazifa Yaratish",
+  "task.creating": "Vazifa yaratilmoqda...",
+  "task.edit_title": "Vazifani Tahrirlash",
+  "task.updating": "Vazifa yangilanmoqda...",
 
-  // Actions
-  "action.change_status": "Status o'zgartirish",
+  // Amallar
+  "action.change_status": "Statusni o'zgartirish",
   "action.add_comment": "Izoh yozish",
   "action.view_comments": "Izohlarni ko'rish",
   "action.add_time": "Vaqt qo'shish",
-  "action.delegate": "Mas'ul o'zgartirish",
+  "action.delegate": "Mas'ulni o'zgartirish",
   "action.move_stage": "Bosqichga ko'chirish (Kanban)",
+  "action.edit": "Tahrirlash",
   "action.back": "Orqaga",
 
   // Status

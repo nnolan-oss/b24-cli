@@ -10,7 +10,9 @@ import { AddComment } from "./screens/AddComment.js";
 import { AddTime } from "./screens/AddTime.js";
 import { ChangeLanguage } from "./screens/ChangeLanguage.js";
 import { ChangeStatus } from "./screens/ChangeStatus.js";
+import { CreateTask } from "./screens/CreateTask.js";
 import { DelegateTask } from "./screens/DelegateTask.js";
+import { EditTask } from "./screens/EditTask.js";
 import { MainMenu } from "./screens/MainMenu.js";
 import { MoveTask } from "./screens/MoveTask.js";
 import { TaskDetail } from "./screens/TaskDetail.js";
@@ -34,6 +36,8 @@ type Screen =
   | "add-time"
   | "delegate"
   | "move-task"
+  | "create-task"
+  | "edit-task"
   | "language";
 
 interface AppProps {
@@ -133,6 +137,14 @@ export function App({ command, args, webhookUrl }: AppProps) {
         />
       );
 
+    case "create-task":
+      return (
+        <CreateTask
+          onDone={() => setScreen("my-tasks")}
+          onBack={() => setScreen("menu")}
+        />
+      );
+
     case "language":
       return (
         <ChangeLanguage
@@ -183,12 +195,22 @@ export function App({ command, args, webhookUrl }: AppProps) {
               time: "add-time",
               delegate: "delegate",
               move: "move-task",
+              edit: "edit-task",
             };
             setScreen(actionMap[action] as Screen);
           }}
           onBack={goBack}
         />
       );
+
+    case "edit-task":
+      return currentTask ? (
+        <EditTask
+          task={currentTask}
+          onDone={() => setScreen("task-detail")}
+          onBack={() => setScreen("task-detail")}
+        />
+      ) : null;
 
     case "move-task":
       return currentTask ? (

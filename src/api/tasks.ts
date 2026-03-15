@@ -201,6 +201,18 @@ export async function getScrumKanbanStages(sprintId: string): Promise<Stage[]> {
   return Array.isArray(result) ? result : Object.values(result || {});
 }
 
+export async function addTaskToScrumKanban(
+  sprintId: string,
+  taskId: string,
+  stageId: string,
+): Promise<void> {
+  await callMethod("tasks.api.scrum.kanban.addTask", {
+    sprintId: parseInt(sprintId),
+    taskId: parseInt(taskId),
+    stageId: parseInt(stageId),
+  });
+}
+
 export interface ChecklistItem {
   ID: string;
   TITLE: string;

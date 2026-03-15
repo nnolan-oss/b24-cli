@@ -17,6 +17,7 @@ export function MainMenu({ onNavigate }: MainMenuProps) {
   const menuItems = [
     { label: t("menu.my_tasks"), value: "my-tasks" as Screen },
     { label: t("menu.all_tasks"), value: "all-tasks" as Screen },
+    { label: t("menu.create_task"), value: "create-task" as Screen },
     { label: t("menu.language"), value: "language" as Screen },
     { label: t("menu.logout"), value: "logout" as Screen },
     { label: t("menu.exit"), value: "exit" as Screen },

@@ -74,6 +74,7 @@ export default {
   "task.time_spent": "Time spent",
   "task.hours": "h",
   "task.minutes": "min",
+  "task.checklist": "Checklist",
   "task.actions": "Actions:",
 
   // Actions

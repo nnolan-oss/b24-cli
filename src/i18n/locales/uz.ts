@@ -74,6 +74,7 @@ export default {
   "task.time_spent": "Sarflangan vaqt",
   "task.hours": "soat",
   "task.minutes": "daqiqa",
+  "task.checklist": "Cheklist",
   "task.actions": "Amallar:",
 
   // Actions

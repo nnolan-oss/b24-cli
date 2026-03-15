@@ -200,3 +200,32 @@ export async function getScrumKanbanStages(sprintId: string): Promise<Stage[]> {
   });
   return Array.isArray(result) ? result : Object.values(result || {});
 }
+
+export interface ChecklistItem {
+  ID: string;
+  TITLE: string;
+  IS_COMPLETE: "Y" | "N";
+  SORT_INDEX: string;
+}
+
+// Checklist
+export async function getChecklistItems(
+  taskId: string,
+): Promise<ChecklistItem[]> {
+  const result = await callMethod("task.checklistitem.getlist", {
+    TASKID: parseInt(taskId),
+  });
+  return Array.isArray(result) ? result : [];
+}
+
+export async function updateChecklistItem(
+  taskId: string,
+  itemId: string,
+  isComplete: boolean,
+): Promise<void> {
+  await callMethod("task.checklistitem.update", {
+    TASKID: parseInt(taskId),
+    ITEMID: parseInt(itemId),
+    FIELDS: { IS_COMPLETE: isComplete ? "Y" : "N" },
+  });
+}

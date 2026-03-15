@@ -71,9 +71,10 @@ export default {
   "task.creator": "Создатель",
   "task.group": "Группа",
   "task.deadline": "Крайний срок",
-  "task.time_spent": "Затрачено",
+  "task.time_spent": "Затрачено времени",
   "task.hours": "ч",
   "task.minutes": "мин",
+  "task.checklist": "Чек-лист",
   "task.actions": "Действия:",
 
   // Actions

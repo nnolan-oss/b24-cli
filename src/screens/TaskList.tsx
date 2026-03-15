@@ -4,8 +4,9 @@ import { getMyTasks, type Task } from "../api/tasks.js";
 import { ErrorMessage } from "../components/ErrorMessage.js";
 import { Header } from "../components/Header.js";
 import { Loading } from "../components/Loading.js";
-import { PriorityBadge, StatusBadge } from "../components/StatusBadge.js";
+import { PriorityBadge } from "../components/StatusBadge.js";
 import { useAsync } from "../hooks/useAsync.js";
+import { useStagesMap } from "../hooks/useStagesMap.js";
 import { t } from "../i18n/index.js";
 import { getUserId } from "../utils/config.js";
 
@@ -29,6 +30,9 @@ export function TaskList({
     [userId, JSON.stringify(filter)],
   );
 
+  const tasks = data?.tasks || [];
+  const { stagesMap, isLoading: stagesLoading } = useStagesMap(tasks);
+
   useInput((input: string, key: any) => {
     if (key.escape) onBack();
     if (input === "r") refetch();
@@ -36,8 +40,6 @@ export function TaskList({
 
   if (loading) return <Loading message={t("tasks.loading")} />;
   if (error) return <ErrorMessage message={error} />;
-
-  const tasks = data?.tasks || [];
 
   if (tasks.length === 0) {
     return (
@@ -56,11 +58,35 @@ export function TaskList({
     task,
   }));
 
+  const getStageOrStatusName = (task: Task) => {
+    if (stagesLoading) {
+      return `...`;
+    }
+
+    const stage = stagesMap[task.stageId];
+    if (stage) {
+      return stage.TITLE;
+    }
+
+    const statusMap: Record<string, string> = {
+      "2": "Pending",
+      "-2": "Pending",
+      "3": "In Progress",
+      "4": "Awaiting control",
+      "5": "Completed",
+      "6": "Deferred",
+      "-1": "Pending",
+    };
+    return statusMap[task.status] || "Unknown";
+  };
+
   return (
     <Box flexDirection="column">
       <Header
         title={listTitle}
-        subtitle={`${t("tasks.total")}: ${data?.total || tasks.length} ${t("tasks.tasks")} | ${t("app.press_r")} | ${t("app.press_esc")}`}
+        subtitle={`${t("tasks.total")}: ${data?.total || tasks.length} ${t(
+          "tasks.tasks",
+        )} | ${t("app.press_r")} | ${t("app.press_esc")}`}
       />
       <SelectInput
         items={items}
@@ -68,12 +94,14 @@ export function TaskList({
         limit={10}
         itemComponent={({ isSelected, label }: any) => {
           const task = items.find((i) => i.label === label)?.task;
+          const displayName = task ? getStageOrStatusName(task) : "";
+
           return (
             <Box>
               <Text color={isSelected ? "cyan" : undefined} bold={isSelected}>
                 {isSelected ? "> " : "  "}
               </Text>
-              {task && <StatusBadge status={task.status} />}
+              {task && <Text color="yellow">[{displayName}]</Text>}
               {task && <Text> </Text>}
               {task && <PriorityBadge priority={task.priority} />}
               <Text color={isSelected ? "cyan" : "white"}> #{task?.id} </Text>

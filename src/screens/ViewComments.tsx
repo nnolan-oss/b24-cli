@@ -17,7 +17,7 @@ export function ViewComments({ task, onBack }: ViewCommentsProps) {
     loading,
     error,
     refetch,
-  } = useAsync(() => getComments(task.id), [task.id]);
+  } = useAsync(() => getComments(task.id, task.chatId), [task.id, task.chatId]);
 
   useInput((input: string, key: any) => {
     if (key.escape) onBack();

@@ -19,6 +19,7 @@ export interface Task {
   groupId: string;
   stageId: string;
   statusComplete: string;
+  chatId?: string;
 }
 
 export interface TaskComment {
@@ -102,13 +103,55 @@ export async function renewTask(taskId: string): Promise<void> {
 }
 
 // Comments
-export async function getComments(taskId: string): Promise<TaskComment[]> {
+export async function getComments(
+  taskId: string,
+  chatId?: string,
+): Promise<TaskComment[]> {
+  if (chatId) {
+    const result = await callMethod("im.dialog.messages.get", {
+      DIALOG_ID: `chat${chatId}`,
+      FIRST_ID: 0,
+      LIMIT: 50,
+    });
+
+    const userMap: Record<string, string> = {};
+    const users = Array.isArray(result?.users)
+      ? result.users
+      : Object.values(result?.users || {});
+    for (const user of users as any[]) {
+      const name =
+        [user.first_name, user.last_name].filter(Boolean).join(" ") ||
+        user.name ||
+        `User #${user.id}`;
+      userMap[String(user.id)] = name;
+    }
+
+    const messages = Array.isArray(result?.messages)
+      ? result.messages
+      : Object.values(result?.messages || {});
+
+    return (messages as any[])
+      .filter((msg) => {
+        if (!msg.author_id || msg.author_id <= 0) return false;
+        if (msg.params?.SYSTEM === "Y") return false;
+        return true;
+      })
+      .map((msg) => ({
+        ID: String(msg.id),
+        AUTHOR_ID: String(msg.author_id),
+        AUTHOR_NAME: userMap[String(msg.author_id)] || `User #${msg.author_id}`,
+        POST_MESSAGE: msg.text || "",
+        POST_DATE: msg.date || "",
+      }));
+  }
+
+  // Fallback to legacy API
   const result = await callMethod("task.commentitem.getlist", {
     TASKID: parseInt(taskId),
     ORDER: { POST_DATE: "asc" },
   });
 
-  return Array.isArray(result) ? result : [];
+  return Array.isArray(result) ? result : Object.values(result || {});
 }
 
 export async function addComment(

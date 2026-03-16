@@ -1,6 +1,6 @@
 {
   "name": "b24-cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "CLI tool to manage Bitrix24 tasks, comments, time tracking from terminal. Supports multiple languages.",
   "type": "module",
   "main": "dist/cli.js",
@@ -12,7 +12,9 @@
     "build": "tsc",
     "prepublishOnly": "tsc",
     "dev": "tsc --watch",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [
     "bitrix24",
@@ -58,6 +60,7 @@
   "devDependencies": {
     "@types/node": "^25.4.0",
     "@types/react": "^19.2.14",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   }
 }

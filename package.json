@@ -14,7 +14,8 @@
     "dev": "tsc --watch",
     "start": "node dist/cli.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepare": "husky"
   },
   "keywords": [
     "bitrix24",
@@ -60,6 +61,7 @@
   "devDependencies": {
     "@types/node": "^25.4.0",
     "@types/react": "^19.2.14",
+    "husky": "^9.1.7",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
   }

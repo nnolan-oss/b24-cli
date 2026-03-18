@@ -6,6 +6,7 @@ import React from "react";
 import { resetClient } from "./api/client.js";
 import {
   addComment,
+  addElapsedTime,
   completeTask,
   createTask,
   deferTask,
@@ -266,6 +267,33 @@ taskCmd
     try {
       await updateTask(id, fields);
       console.log(`${t("app.success")} Task #${id} updated.`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+taskCmd
+  .command("time <id>")
+  .description("Log time spent on a task")
+  .option("--hours <n>", "Hours spent", "0")
+  .option("--mins <n>", "Minutes spent", "0")
+  .option("--comment <text>", "Optional comment")
+  .action(async (id: string, opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    const seconds = parseInt(opts.hours) * 3600 + parseInt(opts.mins) * 60;
+    if (seconds <= 0) {
+      console.error(`${t("app.error")}: ${t("time.zero_error")}`);
+      process.exit(1);
+    }
+    try {
+      await addElapsedTime(id, seconds, opts.comment ?? "");
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      console.log(`${t("app.success")} ${h}h ${m}m logged on task #${id}`);
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

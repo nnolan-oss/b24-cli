@@ -4,7 +4,15 @@ import { Command } from "commander";
 import { render } from "ink";
 import React from "react";
 import { resetClient } from "./api/client.js";
-import { createTask, deleteTask } from "./api/tasks.js";
+import {
+  completeTask,
+  createTask,
+  deferTask,
+  deleteTask,
+  pauseTask,
+  renewTask,
+  startTask,
+} from "./api/tasks.js";
 import { getCurrentUser } from "./api/users.js";
 import { App } from "./App.js";
 import {
@@ -148,6 +156,44 @@ createCmd
       const result = await createTask(fields);
       const taskId = result?.task?.id ?? result?.id ?? result;
       console.log(`${t("app.success")} ID: ${taskId}`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+const TASK_ACTIONS = ["start", "complete", "pause", "defer", "renew"] as const;
+type TaskAction = (typeof TASK_ACTIONS)[number];
+
+const taskActionFns: Record<TaskAction, (id: string) => Promise<void>> = {
+  start: startTask,
+  complete: completeTask,
+  pause: pauseTask,
+  defer: deferTask,
+  renew: renewTask,
+};
+
+const taskCmd = program
+  .command("task")
+  .description("Manage tasks");
+
+taskCmd
+  .command("status <id> <action>")
+  .description(`Change task status. Actions: ${TASK_ACTIONS.join(", ")}`)
+  .action(async (id: string, action: string) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    if (!TASK_ACTIONS.includes(action as TaskAction)) {
+      console.error(
+        `${t("app.error")}: Unknown action "${action}". Available: ${TASK_ACTIONS.join(", ")}`,
+      );
+      process.exit(1);
+    }
+    try {
+      await taskActionFns[action as TaskAction](id);
+      console.log(`${t("app.success")} Task #${id} → ${action}`);
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

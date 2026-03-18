@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("../api/client.js", () => ({
   callMethod: vi.fn(),
+  callMethodWithTotal: vi.fn(),
 }));
 
 // conf mock required because tasks.ts -> i18n -> config -> conf
@@ -13,7 +14,7 @@ vi.mock("conf", () => ({
   },
 }));
 
-const { callMethod } = await import("../api/client.js");
+const { callMethod, callMethodWithTotal } = await import("../api/client.js");
 const {
   getComments,
   addComment,
@@ -22,6 +23,7 @@ const {
 } = await import("../api/tasks.js");
 
 const mockCall = vi.mocked(callMethod);
+const mockCallWithTotal = vi.mocked(callMethodWithTotal);
 
 describe("getComments", () => {
   beforeEach(() => vi.clearAllMocks());
@@ -160,16 +162,16 @@ describe("getMyTasks", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("returns tasks and total", async () => {
-    mockCall.mockResolvedValue({ tasks: [{ id: "1" }], total: 1 });
+    mockCallWithTotal.mockResolvedValue({ result: { tasks: [{ id: "1" }] }, total: 1 });
     const result = await getMyTasks({ userId: "5" });
     expect(result.tasks).toHaveLength(1);
     expect(result.total).toBe(1);
   });
 
   it("filters by RESPONSIBLE_ID", async () => {
-    mockCall.mockResolvedValue({ tasks: [], total: 0 });
+    mockCallWithTotal.mockResolvedValue({ result: { tasks: [] }, total: 0 });
     await getMyTasks({ userId: "7" });
-    expect(mockCall).toHaveBeenCalledWith(
+    expect(mockCallWithTotal).toHaveBeenCalledWith(
       "tasks.task.list",
       expect.objectContaining({
         filter: expect.objectContaining({ RESPONSIBLE_ID: "7" }),
@@ -178,7 +180,7 @@ describe("getMyTasks", () => {
   });
 
   it("returns empty defaults when response is empty", async () => {
-    mockCall.mockResolvedValue({});
+    mockCallWithTotal.mockResolvedValue({ result: {}, total: 0 });
     const result = await getMyTasks();
     expect(result.tasks).toEqual([]);
     expect(result.total).toBe(0);

@@ -1,6 +1,6 @@
 {
   "name": "b24-cli",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "CLI tool to manage Bitrix24 tasks, comments, time tracking from terminal. Supports multiple languages.",
   "type": "module",
   "main": "dist/cli.js",

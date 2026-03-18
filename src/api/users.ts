@@ -4,8 +4,20 @@ export interface User {
   ID: string;
   NAME: string;
   LAST_NAME: string;
+  SECOND_NAME?: string;
   EMAIL: string;
   PERSONAL_PHOTO: string;
+  PERSONAL_PHONE?: string;
+  PERSONAL_MOBILE?: string;
+  PERSONAL_BIRTHDAY?: string;
+  PERSONAL_GENDER?: string;
+  WORK_POSITION?: string;
+  WORK_PHONE?: string;
+  WORK_COMPANY?: string;
+  UF_SKYPE?: string;
+  UF_PHONE_INNER?: string;
+  IS_ONLINE?: string;
+  LAST_LOGIN?: string;
 }
 
 export async function getCurrentUser(): Promise<User> {
@@ -20,6 +32,13 @@ export async function getUsers(
 
 export async function getUser(userId: string): Promise<User[]> {
   return await callMethod("user.get", { ID: userId });
+}
+
+export async function updateUser(
+  id: string,
+  fields: Record<string, any>,
+): Promise<void> {
+  await callMethod("user.update", { ID: id, ...fields });
 }
 
 export function formatUserName(user: User): string {

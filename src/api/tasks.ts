@@ -1,4 +1,4 @@
-import { callMethod } from "./client.js";
+import { callMethod, callMethodWithTotal } from "./client.js";
 
 export interface Task {
   id: string;
@@ -50,13 +50,13 @@ export interface Stage {
 export async function getMyTasks(
   params: Record<string, any> = {},
 ): Promise<{ tasks: Task[]; total: number }> {
-  const result = await callMethod("tasks.task.list", {
+  const { result, total } = await callMethodWithTotal("tasks.task.list", {
     order: { ID: "desc" },
     filter: { RESPONSIBLE_ID: params.userId || 0, ...params.filter },
     select: ["*", "UF_*", "GROUP_ID"],
     start: params.start || 0,
   });
-  return { tasks: result.tasks || [], total: result.total || 0 };
+  return { tasks: result.tasks || [], total };
 }
 
 export async function getTask(taskId: string): Promise<Task> {

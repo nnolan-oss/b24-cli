@@ -35,3 +35,19 @@ export async function callMethod<T = any>(
 
   return data.hasOwnProperty("result") ? data.result : data;
 }
+
+export async function callMethodWithTotal<T = any>(
+  method: string,
+  params: any = {},
+): Promise<{ result: T; total: number }> {
+  const api = getClient();
+  const { data } = await api.post(`${method}.json`, params);
+  if (data.error) {
+    throw new Error(`Bitrix24: ${data.error_description || data.error}`);
+  }
+
+  return {
+    result: data.hasOwnProperty("result") ? data.result : data,
+    total: data.total ?? 0,
+  };
+}

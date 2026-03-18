@@ -11,6 +11,7 @@ import {
   createTask,
   deferTask,
   deleteTask,
+  getElapsedTime,
   getMyTasks,
   getTask,
   pauseTask,
@@ -18,7 +19,12 @@ import {
   startTask,
   updateTask,
 } from "./api/tasks.js";
-import { getCurrentUser, getProjects, getUsers } from "./api/users.js";
+import {
+  getCurrentUser,
+  getProjects,
+  getUsers,
+  updateUser,
+} from "./api/users.js";
 import { App } from "./App.js";
 import {
   getAvailableLocales,
@@ -441,6 +447,219 @@ projectsCmd
       console.log("");
       for (const p of projects) {
         console.log(`  #${p.ID}  ${p.NAME}`);
+      }
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+// ─── PROFILE ─────────────────────────────────────────────────────────────────
+
+const profileCmd = program
+  .command("profile")
+  .description("View or edit your profile")
+  .option("--json", "Output as JSON")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const u = await getCurrentUser();
+      if (opts.json) {
+        console.log(JSON.stringify(u, null, 2));
+        return;
+      }
+      console.log("─── Profile ───────────────────────────");
+      console.log(`  ID:        #${u.ID}`);
+      console.log(`  Name:      ${u.NAME} ${u.SECOND_NAME ?? ""} ${u.LAST_NAME}`.trimEnd());
+      console.log(`  Email:     ${u.EMAIL ?? "—"}`);
+      if (u.WORK_POSITION)   console.log(`  Position:  ${u.WORK_POSITION}`);
+      if (u.WORK_COMPANY)    console.log(`  Company:   ${u.WORK_COMPANY}`);
+      if (u.PERSONAL_PHONE)  console.log(`  Phone:     ${u.PERSONAL_PHONE}`);
+      if (u.PERSONAL_MOBILE) console.log(`  Mobile:    ${u.PERSONAL_MOBILE}`);
+      if (u.WORK_PHONE)      console.log(`  Work ph:   ${u.WORK_PHONE}`);
+      if (u.PERSONAL_BIRTHDAY) console.log(`  Birthday:  ${u.PERSONAL_BIRTHDAY}`);
+      if (u.UF_SKYPE)        console.log(`  Skype:     ${u.UF_SKYPE}`);
+      if (u.UF_PHONE_INNER)  console.log(`  Inner ph:  ${u.UF_PHONE_INNER}`);
+      console.log(`  Online:    ${u.IS_ONLINE === "Y" ? "Yes" : "No"}`);
+      if (u.LAST_LOGIN)      console.log(`  Last login:${u.LAST_LOGIN}`);
+      console.log("───────────────────────────────────────");
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+profileCmd
+  .command("edit")
+  .description("Edit your profile fields")
+  .option("--name <value>", "First name")
+  .option("--last-name <value>", "Last name")
+  .option("--second-name <value>", "Middle name")
+  .option("--email <value>", "Email address")
+  .option("--position <value>", "Work position/title")
+  .option("--company <value>", "Work company")
+  .option("--phone <value>", "Personal phone")
+  .option("--mobile <value>", "Personal mobile")
+  .option("--work-phone <value>", "Work phone")
+  .option("--birthday <value>", "Birthday (YYYY-MM-DD)")
+  .option("--skype <value>", "Skype username")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    const fields: Record<string, any> = {};
+    if (opts.name)        fields.NAME = opts.name;
+    if (opts.lastName)    fields.LAST_NAME = opts.lastName;
+    if (opts.secondName)  fields.SECOND_NAME = opts.secondName;
+    if (opts.email)       fields.EMAIL = opts.email;
+    if (opts.position)    fields.WORK_POSITION = opts.position;
+    if (opts.company)     fields.WORK_COMPANY = opts.company;
+    if (opts.phone)       fields.PERSONAL_PHONE = opts.phone;
+    if (opts.mobile)      fields.PERSONAL_MOBILE = opts.mobile;
+    if (opts.workPhone)   fields.WORK_PHONE = opts.workPhone;
+    if (opts.birthday)    fields.PERSONAL_BIRTHDAY = opts.birthday;
+    if (opts.skype)       fields.UF_SKYPE = opts.skype;
+
+    if (Object.keys(fields).length === 0) {
+      console.error(`${t("app.error")}: At least one flag required. Run "b24 profile edit --help"`);
+      process.exit(1);
+    }
+    try {
+      await updateUser(getUserId(), fields);
+      console.log(`${t("app.success")} Profile updated.`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+// ─── DAY START ───────────────────────────────────────────────────────────────
+
+program
+  .command("day")
+  .description("Daily helpers")
+  .command("start")
+  .description("Daily standup: show active + overdue tasks")
+  .action(async () => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const userId = getUserId();
+      const now = new Date();
+      const todayStr = now.toISOString().split("T")[0];
+
+      const [inProgressRes, overdueRes] = await Promise.all([
+        getMyTasks({ userId, filter: { REAL_STATUS: 3 } }),
+        getMyTasks({ userId, filter: { "<=DEADLINE": todayStr, "!STATUS": 5 } }),
+      ]);
+
+      const user = await getCurrentUser();
+      const hour = now.getHours();
+      const greeting =
+        hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
+      console.log(`${greeting}, ${user.NAME}!`);
+      console.log(`Today: ${now.toDateString()}`);
+      console.log("");
+
+      // In progress
+      console.log(`▶  In progress (${inProgressRes.tasks.length}):`);
+      if (inProgressRes.tasks.length === 0) {
+        console.log("   — none");
+      } else {
+        for (const task of inProgressRes.tasks) {
+          console.log(`   #${task.id}  ${task.title}`);
+        }
+      }
+      console.log("");
+
+      // Overdue (exclude already in inProgress list)
+      const inProgressIds = new Set(inProgressRes.tasks.map((t) => t.id));
+      const overdue = overdueRes.tasks.filter(
+        (task) => !inProgressIds.has(task.id) && task.deadline && task.deadline < todayStr,
+      );
+      console.log(`⚠  Overdue (${overdue.length}):`);
+      if (overdue.length === 0) {
+        console.log("   — none");
+      } else {
+        for (const task of overdue) {
+          console.log(`   #${task.id}  ${task.title}  (due: ${task.deadline?.split("T")[0]})`);
+        }
+      }
+      console.log("");
+      console.log(`Tip: b24 task active   — see active task details + time spent`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+// ─── TASK ACTIVE ─────────────────────────────────────────────────────────────
+
+taskCmd
+  .command("active")
+  .description("Show currently active (in-progress) task(s) with elapsed time")
+  .option("--pause", "Pause the active task")
+  .option("--json", "Output as JSON")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const { tasks } = await getMyTasks({
+        userId: getUserId(),
+        filter: { REAL_STATUS: 3 },
+      });
+
+      if (tasks.length === 0) {
+        console.log("No active tasks right now.");
+        return;
+      }
+
+      if (opts.json) {
+        console.log(JSON.stringify(tasks, null, 2));
+        return;
+      }
+
+      // Fetch elapsed time for each active task in parallel
+      const withTime = await Promise.all(
+        tasks.map(async (task) => {
+          const items = await getElapsedTime(task.id);
+          const totalSec = items.reduce(
+            (sum, item) => sum + parseInt(item.SECONDS ?? "0"),
+            0,
+          );
+          return { task, totalSec };
+        }),
+      );
+
+      console.log(`Active tasks (${tasks.length}):`);
+      console.log("");
+      for (const { task, totalSec } of withTime) {
+        const h = Math.floor(totalSec / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
+        console.log(`  #${task.id}  ${task.title}`);
+        console.log(`       Priority:    ${task.priority}`);
+        console.log(`       Responsible: ${task.responsible?.name ?? task.responsibleId}`);
+        if (task.deadline) console.log(`       Deadline:    ${task.deadline.split("T")[0]}`);
+        console.log(`       Time logged: ${h}h ${m}m`);
+        console.log("");
+      }
+
+      if (opts.pause) {
+        for (const { task } of withTime) {
+          await pauseTask(task.id);
+          console.log(`${t("app.success")} Task #${task.id} paused.`);
+        }
+      } else if (tasks.length > 0) {
+        console.log(`Tip: add --pause flag to pause active task(s)`);
       }
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);

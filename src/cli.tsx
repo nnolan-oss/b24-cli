@@ -5,6 +5,7 @@ import { render } from "ink";
 import React from "react";
 import { resetClient } from "./api/client.js";
 import {
+  addComment,
   completeTask,
   createTask,
   deferTask,
@@ -194,6 +195,24 @@ taskCmd
     try {
       await taskActionFns[action as TaskAction](id);
       console.log(`${t("app.success")} Task #${id} → ${action}`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+taskCmd
+  .command("comment <id>")
+  .description("Add a comment to a task")
+  .requiredOption("--message <text>", "Comment text")
+  .action(async (id: string, opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      await addComment(id, opts.message);
+      console.log(`${t("app.success")} Comment added to task #${id}`);
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

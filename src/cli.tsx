@@ -14,6 +14,7 @@ import {
   pauseTask,
   renewTask,
   startTask,
+  updateTask,
 } from "./api/tasks.js";
 import { getCurrentUser } from "./api/users.js";
 import { App } from "./App.js";
@@ -232,6 +233,39 @@ taskCmd
         console.log(`       Status: ${task.status}  Priority: ${task.priority}  Responsible: ${task.responsible?.name ?? task.responsibleId}`);
         console.log("");
       }
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+taskCmd
+  .command("edit <id>")
+  .description("Edit a task")
+  .option("--title <title>", "New title")
+  .option("--desc <description>", "New description")
+  .option("--priority <level>", "Priority: 0 = low, 1 = medium, 2 = high")
+  .option("--deadline <date>", "Deadline (YYYY-MM-DD or ISO format)")
+  .option("--responsible <id>", "Responsible user ID")
+  .action(async (id: string, opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    const fields: Record<string, any> = {};
+    if (opts.title) fields.TITLE = opts.title;
+    if (opts.desc) fields.DESCRIPTION = opts.desc;
+    if (opts.priority !== undefined) fields.PRIORITY = opts.priority;
+    if (opts.deadline) fields.DEADLINE = opts.deadline;
+    if (opts.responsible) fields.RESPONSIBLE_ID = opts.responsible;
+
+    if (Object.keys(fields).length === 0) {
+      console.error(`${t("app.error")}: At least one flag required (--title, --desc, --priority, --deadline, --responsible)`);
+      process.exit(1);
+    }
+    try {
+      await updateTask(id, fields);
+      console.log(`${t("app.success")} Task #${id} updated.`);
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

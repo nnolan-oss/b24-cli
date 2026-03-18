@@ -17,7 +17,7 @@ import {
   startTask,
   updateTask,
 } from "./api/tasks.js";
-import { getCurrentUser } from "./api/users.js";
+import { getCurrentUser, getProjects, getUsers } from "./api/users.js";
 import { App } from "./App.js";
 import {
   getAvailableLocales,
@@ -346,6 +346,68 @@ deleteCmd
     try {
       await deleteTask(id);
       console.log(`${t("app.success")} Task #${id} deleted.`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+const usersCmd = program
+  .command("users")
+  .description("Manage users");
+
+usersCmd
+  .command("list")
+  .description("List all active users")
+  .option("--json", "Output as JSON")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const users = await getUsers({ ACTIVE: true });
+      if (opts.json) {
+        console.log(JSON.stringify(users, null, 2));
+        return;
+      }
+      console.log(`Users (${users.length}):`);
+      console.log("");
+      for (const u of users) {
+        console.log(`  #${u.ID}  ${u.NAME} ${u.LAST_NAME}`.trimEnd());
+        if (u.EMAIL) console.log(`       ${u.EMAIL}`);
+        console.log("");
+      }
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+const projectsCmd = program
+  .command("projects")
+  .description("Manage projects");
+
+projectsCmd
+  .command("list")
+  .description("List all projects")
+  .option("--json", "Output as JSON")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const projects = await getProjects();
+      if (opts.json) {
+        console.log(JSON.stringify(projects, null, 2));
+        return;
+      }
+      console.log(`Projects (${projects.length}):`);
+      console.log("");
+      for (const p of projects) {
+        console.log(`  #${p.ID}  ${p.NAME}`);
+      }
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

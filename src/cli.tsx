@@ -10,6 +10,7 @@ import {
   createTask,
   deferTask,
   deleteTask,
+  getMyTasks,
   pauseTask,
   renewTask,
   startTask,
@@ -195,6 +196,42 @@ taskCmd
     try {
       await taskActionFns[action as TaskAction](id);
       console.log(`${t("app.success")} Task #${id} → ${action}`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+taskCmd
+  .command("list")
+  .description("List tasks")
+  .option("--all", "Show all tasks (default: only mine)")
+  .option("--limit <n>", "Max number of tasks to show", "20")
+  .option("--json", "Output as JSON")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const params: Record<string, any> = { start: 0 };
+      if (!opts.all) params.userId = getUserId();
+
+      const { tasks, total } = await getMyTasks(params);
+      const limited = tasks.slice(0, parseInt(opts.limit));
+
+      if (opts.json) {
+        console.log(JSON.stringify(limited, null, 2));
+        return;
+      }
+
+      console.log(`Tasks (${limited.length}/${total}):`);
+      console.log("");
+      for (const task of limited) {
+        console.log(`  #${task.id}  ${task.title}`);
+        console.log(`       Status: ${task.status}  Priority: ${task.priority}  Responsible: ${task.responsible?.name ?? task.responsibleId}`);
+        console.log("");
+      }
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);

@@ -4,6 +4,7 @@ import { Command } from "commander";
 import { render } from "ink";
 import React from "react";
 import { resetClient } from "./api/client.js";
+import { createTask, deleteTask } from "./api/tasks.js";
 import { getCurrentUser } from "./api/users.js";
 import { App } from "./App.js";
 import {
@@ -15,6 +16,7 @@ import {
 } from "./i18n/index.js";
 import {
   clearConfig,
+  getUserId,
   getWebhookUrl,
   isAuthenticated,
   setUserId,
@@ -109,6 +111,81 @@ program
       React.createElement(App, { command: "tasks", args }),
     );
     waitUntilExit().then(() => process.exit(0));
+  });
+
+const createCmd = program
+  .command("create")
+  .description("Create resources (task, ...)");
+
+createCmd
+  .command("task")
+  .description("Create a new task")
+  .requiredOption("--title <title>", "Task title")
+  .option("--desc <description>", "Task description")
+  .option("--deadline <date>", "Deadline (YYYY-MM-DD or ISO format)")
+  .option(
+    "--priority <level>",
+    "Priority: 0 = low, 1 = medium, 2 = high",
+    "1",
+  )
+  .option("--group <id>", "Group / project ID")
+  .option("--responsible <id>", "Responsible user ID (defaults to you)")
+  .action(async (opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const fields: Record<string, any> = {
+        TITLE: opts.title,
+        PRIORITY: opts.priority,
+        RESPONSIBLE_ID: opts.responsible || getUserId(),
+      };
+      if (opts.desc) fields.DESCRIPTION = opts.desc;
+      if (opts.deadline) fields.DEADLINE = opts.deadline;
+      if (opts.group) fields.GROUP_ID = opts.group;
+
+      const result = await createTask(fields);
+      const taskId = result?.task?.id ?? result?.id ?? result;
+      console.log(`${t("app.success")} ID: ${taskId}`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+const deleteCmd = program
+  .command("delete")
+  .description("Delete resources (task, ...)");
+
+deleteCmd
+  .command("task <id>")
+  .description("Delete a task by ID")
+  .option("-y, --yes", "Skip confirmation prompt")
+  .action(async (id: string, opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    if (!opts.yes) {
+      const { createInterface } = await import("readline");
+      const rl = createInterface({ input: process.stdin, output: process.stdout });
+      const answer = await new Promise<string>((resolve) =>
+        rl.question(`Delete task #${id}? (y/N) `, resolve),
+      );
+      rl.close();
+      if (answer.toLowerCase() !== "y") {
+        console.log(t("app.cancel"));
+        return;
+      }
+    }
+    try {
+      await deleteTask(id);
+      console.log(`${t("app.success")} Task #${id} deleted.`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
   });
 
 program

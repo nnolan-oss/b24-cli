@@ -173,6 +173,47 @@ export default {
   "history.loading": "Tarix yuklanmoqda...",
   "history.empty": "Tarix yozuvlari topilmadi.",
 
+  // Profil
+  "menu.profile": "Mening profilim",
+  "menu.active_tasks": "Faol vazifalar",
+  "menu.day_start": "Kun boshlanishi",
+  "profile.title": "Mening profilim",
+  "profile.loading": "Profil yuklanmoqda...",
+  "profile.edit": "Profilni tahrirlash",
+  "profile.edit_title": "Profilni tahrirlash",
+  "profile.updating": "Profil yangilanmoqda...",
+  "profile.updated": "Profil yangilandi!",
+  "profile.name": "Ism",
+  "profile.last_name": "Familiya",
+  "profile.email": "Email",
+  "profile.position": "Lavozim",
+  "profile.company": "Kompaniya",
+  "profile.phone": "Telefon",
+  "profile.mobile": "Mobil",
+  "profile.work_phone": "Ish telefoni",
+  "profile.birthday": "Tug'ilgan kun",
+  "profile.skype": "Skype",
+  "profile.online": "Online",
+  "profile.last_login": "Oxirgi kirish",
+  "profile.inner_phone": "Ichki telefon",
+
+  // Faol vazifalar
+  "active.title": "Faol vazifalar",
+  "active.loading": "Faol vazifalar yuklanmoqda...",
+  "active.empty": "Hozir faol vazifalar yo'q",
+  "active.time_logged": "vaqt ko'rsatilmoqda",
+
+  // Kun boshlanishi
+  "day.title": "Kun boshlanishi",
+  "day.loading": "Yuklanmoqda...",
+  "day.active_section": "Bajarilmoqda",
+  "day.overdue_section": "Muddati o'tgan",
+  "day.none": "— yo'q",
+  "day.greeting_morning": "Xayrli tong",
+  "day.greeting_afternoon": "Xayrli kun",
+  "day.greeting_evening": "Xayrli kech",
+  "day.today": "Bugun",
+
   // Til
   "lang.title": "Tilni o'zgartirish",
   "lang.select": "Tilni tanlang:",

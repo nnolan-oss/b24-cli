@@ -6,16 +6,20 @@ import { getCurrentUser } from "./api/users.js";
 import { ErrorMessage } from "./components/ErrorMessage.js";
 import { Loading } from "./components/Loading.js";
 import { t } from "./i18n/index.js";
+import { ActiveTasks } from "./screens/ActiveTasks.js";
 import { AddComment } from "./screens/AddComment.js";
 import { AddTime } from "./screens/AddTime.js";
 import { ChangeLanguage } from "./screens/ChangeLanguage.js";
 import { ChangeStatus } from "./screens/ChangeStatus.js";
 import { ConfirmDelete } from "./screens/ConfirmDelete.js";
 import { CreateTask } from "./screens/CreateTask.js";
+import { DayStart } from "./screens/DayStart.js";
 import { DelegateTask } from "./screens/DelegateTask.js";
+import { EditProfile } from "./screens/EditProfile.js";
 import { EditTask } from "./screens/EditTask.js";
 import { MainMenu } from "./screens/MainMenu.js";
 import { MoveTask } from "./screens/MoveTask.js";
+import { Profile } from "./screens/Profile.js";
 import { TaskDetail } from "./screens/TaskDetail.js";
 import { TaskList } from "./screens/TaskList.js";
 import { ViewComments } from "./screens/ViewComments.js";
@@ -31,6 +35,10 @@ type Screen =
   | "menu"
   | "my-tasks"
   | "all-tasks"
+  | "active-tasks"
+  | "day-start"
+  | "profile"
+  | "edit-profile"
   | "task-detail"
   | "change-status"
   | "add-comment"
@@ -116,6 +124,8 @@ export function App({ command, args, webhookUrl }: AppProps) {
       setScreen("task-detail");
     } else if (screen === "task-detail") {
       setScreen("my-tasks");
+    } else if (screen === "edit-profile") {
+      setScreen("profile");
     } else {
       setScreen("menu");
     }
@@ -153,6 +163,44 @@ export function App({ command, args, webhookUrl }: AppProps) {
       return (
         <ChangeLanguage
           onDone={() => setScreen("menu")}
+          onBack={() => setScreen("menu")}
+        />
+      );
+
+    case "profile":
+      return (
+        <Profile
+          onEdit={() => setScreen("edit-profile")}
+          onBack={() => setScreen("menu")}
+        />
+      );
+
+    case "edit-profile":
+      return (
+        <EditProfile
+          onDone={() => setScreen("profile")}
+          onBack={() => setScreen("profile")}
+        />
+      );
+
+    case "active-tasks":
+      return (
+        <ActiveTasks
+          onSelect={(id) => {
+            setSelectedTaskId(id);
+            setScreen("task-detail");
+          }}
+          onBack={() => setScreen("menu")}
+        />
+      );
+
+    case "day-start":
+      return (
+        <DayStart
+          onSelect={(id) => {
+            setSelectedTaskId(id);
+            setScreen("task-detail");
+          }}
           onBack={() => setScreen("menu")}
         />
       );

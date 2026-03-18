@@ -171,6 +171,47 @@ export default {
   "history.loading": "Loading history...",
   "history.empty": "No history events found.",
 
+  // Profile
+  "menu.profile": "My Profile",
+  "menu.active_tasks": "Active Tasks",
+  "menu.day_start": "Day Start",
+  "profile.title": "My Profile",
+  "profile.loading": "Loading profile...",
+  "profile.edit": "Edit Profile",
+  "profile.edit_title": "Edit Profile",
+  "profile.updating": "Updating profile...",
+  "profile.updated": "Profile updated!",
+  "profile.name": "First name",
+  "profile.last_name": "Last name",
+  "profile.email": "Email",
+  "profile.position": "Position",
+  "profile.company": "Company",
+  "profile.phone": "Phone",
+  "profile.mobile": "Mobile",
+  "profile.work_phone": "Work phone",
+  "profile.birthday": "Birthday",
+  "profile.skype": "Skype",
+  "profile.online": "Online",
+  "profile.last_login": "Last login",
+  "profile.inner_phone": "Inner phone",
+
+  // Active Tasks
+  "active.title": "Active Tasks",
+  "active.loading": "Loading active tasks...",
+  "active.empty": "No active tasks right now",
+  "active.time_logged": "time shown",
+
+  // Day Start
+  "day.title": "Day Start",
+  "day.loading": "Loading your day...",
+  "day.active_section": "In Progress",
+  "day.overdue_section": "Overdue",
+  "day.none": "— none",
+  "day.greeting_morning": "Good morning",
+  "day.greeting_afternoon": "Good afternoon",
+  "day.greeting_evening": "Good evening",
+  "day.today": "Today",
+
   // Language
   "lang.title": "Change language",
   "lang.select": "Select language:",

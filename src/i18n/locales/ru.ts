@@ -172,6 +172,47 @@ export default {
   "history.loading": "Загрузка истории...",
   "history.empty": "Записей в истории не найдено.",
 
+  // Профиль
+  "menu.profile": "Мой профиль",
+  "menu.active_tasks": "Активные задачи",
+  "menu.day_start": "Начало дня",
+  "profile.title": "Мой профиль",
+  "profile.loading": "Загрузка профиля...",
+  "profile.edit": "Редактировать профиль",
+  "profile.edit_title": "Редактировать профиль",
+  "profile.updating": "Обновление профиля...",
+  "profile.updated": "Профиль обновлён!",
+  "profile.name": "Имя",
+  "profile.last_name": "Фамилия",
+  "profile.email": "Email",
+  "profile.position": "Должность",
+  "profile.company": "Компания",
+  "profile.phone": "Телефон",
+  "profile.mobile": "Мобильный",
+  "profile.work_phone": "Рабочий телефон",
+  "profile.birthday": "День рождения",
+  "profile.skype": "Skype",
+  "profile.online": "Онлайн",
+  "profile.last_login": "Последний вход",
+  "profile.inner_phone": "Внутренний телефон",
+
+  // Активные задачи
+  "active.title": "Активные задачи",
+  "active.loading": "Загрузка активных задач...",
+  "active.empty": "Нет активных задач",
+  "active.time_logged": "время отображается",
+
+  // Начало дня
+  "day.title": "Начало дня",
+  "day.loading": "Загрузка...",
+  "day.active_section": "В работе",
+  "day.overdue_section": "Просроченные",
+  "day.none": "— нет",
+  "day.greeting_morning": "Доброе утро",
+  "day.greeting_afternoon": "Добрый день",
+  "day.greeting_evening": "Добрый вечер",
+  "day.today": "Сегодня",
+
   // Language
   "lang.title": "Сменить язык",
   "lang.select": "Выберите язык:",

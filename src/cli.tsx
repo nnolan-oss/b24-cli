@@ -12,6 +12,7 @@ import {
   deferTask,
   deleteTask,
   getMyTasks,
+  getTask,
   pauseTask,
   renewTask,
   startTask,
@@ -198,6 +199,39 @@ taskCmd
     try {
       await taskActionFns[action as TaskAction](id);
       console.log(`${t("app.success")} Task #${id} → ${action}`);
+    } catch (err: any) {
+      console.error(`${t("app.error")}: ${err.message}`);
+      process.exit(1);
+    }
+  });
+
+taskCmd
+  .command("get <id>")
+  .description("Get task details by ID")
+  .option("--json", "Output as JSON")
+  .action(async (id: string, opts) => {
+    if (!isAuthenticated()) {
+      console.error(t("auth.not_configured"));
+      process.exit(1);
+    }
+    try {
+      const task = await getTask(id);
+      if (opts.json) {
+        console.log(JSON.stringify(task, null, 2));
+        return;
+      }
+      console.log(`Task #${task.id}`);
+      console.log(`  ${t("task.title")}:       ${task.title}`);
+      console.log(`  ${t("task.status")}:      ${task.status}`);
+      console.log(`  ${t("task.priority")}:    ${task.priority}`);
+      console.log(`  ${t("task.responsible")}: ${task.responsible?.name ?? task.responsibleId}`);
+      console.log(`  ${t("task.creator")}:     ${task.creator?.name ?? task.createdBy}`);
+      if (task.group?.name) console.log(`  ${t("task.group")}:       ${task.group.name}`);
+      if (task.deadline)    console.log(`  ${t("task.deadline")}:    ${task.deadline}`);
+      if (task.description) {
+        console.log(`  ${t("task.description")}:`);
+        console.log(`    ${task.description}`);
+      }
     } catch (err: any) {
       console.error(`${t("app.error")}: ${err.message}`);
       process.exit(1);
